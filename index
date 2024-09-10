@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murder Mystery Game</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Indie+Flower&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+  <style>
+    body {
+      font-family: "Barlow Condensed", Arial, sans-serif;
+      background-color: rgba(34, 11, 125, 1);
+      color: #fff;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      min-height: 100vh;
+      width: 100vw;
+    }
+
+    button,
+    input,
+    p1,
+    h1,
+    p,
+    textarea {
+      font-family: "Barlow Condensed";
+      text-transform: uppercase;
+    }
+
+    textarea {
+      font-family: "Indie Flower"
+    }
+
+    #buttonAreaMain {
+      display: flex;
+      justify-content: space-evenly;
+      position: fixed;
+      bottom: 20px;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      z-index:1;
+    }
+
+    #open-map-btn,
+    .open-notes-btn {
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 75px;
+      height: 80px;
+      border-radius: 5px;
+      overflow: hidden;
+      border: 2px solid rgba(242, 143, 28, 1);
+      box-shadow: 0 10px 20px 0 rgba(20, 8, 67, 1);
+      transition: all 0.3s ease;
+      opacity: 1;
+      transform: scale(100%);
+      margin: 0;
+      padding: 0;
+    }
+
+    #open-map-btn:hover,
+    .open-notes-btn:hover {
+      opacity: 1;
+      transform: scale(100%) translateY(-25%) rotate(5deg);
+    }
+
+    #open-map-btn img,
+    .open-notes-btn img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+    }
+
+    #open-map-btn p1 {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .open-notes-btn p1 {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+
+    #gameHeader {
+      z-index: 2000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 70px;
+      background-image: linear-gradient(to bottom, rgba(12, 5, 40, 1) 5%, rgba(12, 5, 40, 0) 100%);
+    }
+
+    #gameHeader img {
+      width: 75px;
+      padding: 10px;
+      background-color: rgba(12, 5, 40, 1);
+      border-radius: 0 0 50% 50%;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 90px 15px 120px 15px;
+      /* Space for the clue banner */
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+      background: inherit;
+      box-sizing: border-box;
+    }
+
+    #launchScreen {
+      text-align: left;
+    }
+
+    .storySegment {
+      padding: 20px;
+      margin: 20px 0;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    
+    .storySegment p {
+      padding: 0;
+      margin: 0;
+      font-size:1em;
+    }
+    
+    
+    .scrollDownLaunchButton {
+      position:relative;
+      display: inline-block;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      margin-top: 15px;
+      border-radius:50%;
+      width:35px;
+      height:35px;
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    
+    .scrollDownLaunchButton i {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      font-size: 20px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .scrollDownLaunchButton:hover i {
+      color: rgba(255,255,255,0.7);
+    }
+    
+
+    .launchCharacterCards {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      width: 100%;
+      margin-top:20px;
+    }
+
+    .launchCharacterCard {
+      min-width: 85%;
+      margin: 0 7.5px;
+      padding: 15px;
+      box-sizing: border-box;
+      border: 2px solid white;
+      border-radius: 15px;
+      backdrop-filter: brightness(1.2) saturate(1.2);
+    }
+
+    .launchCharacterCard p {
+      padding: 0;
+      margin: 0;
+    }
+
+    #startButton {
+      margin: 0;
+      width: 100%;
+      height: 50px;
+      border-radius:15px;
+      box-sizing: border-box;
+    }
+
+    #startButton:hover {
+      background-color: rgba(242, 143, 28, 1);
+    }
+
+    .paths {
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+    }
+
+    .paths button {
+      min-width: 80vw;
+      min-height: 400px;
+    }
+
+    button {
+      background-color: rgba(242, 143, 28, 1);
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    .story {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .reveal,
+    .feedback {
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .feedback {
+      color: #f00;
+    }
+
+    /* Fade-in and fade-out animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* Classes to apply the animations */
+    .fade-in {
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.5s forwards;
+    }
+
+    /* Ensure content is hidden during fade-out */
+    .hidden {
+      display: none;
+    }
+
+
+    #feedbackMessage {
+      font-size: 1.2em;
+    }
+
+    #clueBanner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      background-image: linear-gradient(to bottom, rgba(20, 8, 67, 0) 0, rgba(20, 8, 67, 1) 50px);
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    #clueBanner.closed {
+      height: 60px;
+      /* Height when closed, showing only the button */
+    }
+
+    #clueBanner.open {
+      height: 40vh;
+      /* Adjust based on content height */
+    }
+
+    #clueContent {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #clueContent h1 {
+      font-weight: bold;
+    }
+
+    #toggleClues {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: calc(100% - 20px);
+      padding: 0;
+      margin: 0;
+      height: 50px;
+      border: none;
+      background-image: url(https://cdn.shopify.com/s/files/1/0550/8782/5151/files/20240908_203329_0000.png?v=1725824035);
+      background-size: cover;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #toggleClues p1 {
+      background: black;
+      padding: 10px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+
+    #clueList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    #clueList h1 {
+      margin: 0;
+      font-size: 16px;
+      /* Adjust size as needed */
+      font-weight: bold;
+    }
+
+    #clueList p {
+      margin: 5px 0 0 0;
+      font-size: 14px;
+      /* Adjust size as needed */
+    }
+
+    .clueItem {
+      width: calc(100% - 20px);
+      margin: 0 auto;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+
+
+
+    #map-container.active {
+      visibility: visible;
+      filter: opacity(1);
+      transform: scale(1) rotate(0);
+    }
+
+    #map-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      display: flex;
+      visibility: hidden;
+      justify-content: center;
+      align-items: flex-start;
+      z-index: 1100;
+      transition: all 0.5s ease;
+      transform: scale(1.4) rotate(5deg);
+      filter: opacity(0);
+    }
+
+    #map {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: scroll;
+      z-index: 0;
+    }
+
+    #map-image {
+      display: flex;
+      width: 150%;
+      height: 150%;
+      object-fit: cover;
+      cursor: grab;
+    }
+
+    .hotspot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .info-panel {
+      position: absolute;
+      background-color: white;
+      color: black;
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 1000;
+      width: 200px;
+      display: none;
+      /* Hide by default */
+    }
+
+    #close-btn {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      background-color: rgba(242, 143, 28, 1);
+      box-shadow: 0 10px 20px 0 rgba(20, 8, 67, 1), inset 0 0 10px 0 rgba(255, 255, 255, 0.25);
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25pt;
+      z-index: 1;
+    }
+    
+    #close-btn p {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -55%);
+          padding: 0;
+          margin: 0;
+          width: 40px;
+          height: 40px;
+          color: rgba(12, 5, 40, 1);
+        }
+
+
+
+
+    /* Notes Section (Initially Hidden) */
+    /* Notes Section - hidden by default, sliding from the bottom */
+    .notes-section {
+      width: calc(100% - 30px);
+      max-height: 50vh;
+      padding: 20px;
+      background-image: url(https://cdn.shopify.com/s/files/1/0550/8782/5151/files/brown-texture_1253-178.jpg?v=1725896982);
+      background-size: cover;
+      position: fixed;
+      bottom: 0;
+      /* Hidden below the screen initially */
+      left: 50%;
+      transform: translateX(-50%) translateY(100%) rotate(10deg);
+      transition: all 0.3s ease;
+      /* Smooth transition when sliding up/down */
+      z-index: 900;
+      box-sizing: border-box;
+      border-top-left-radius: 15% 5px;
+      border-top-right-radius: 35% 10px;
+    }
+
+    /* When active, slide the notes section up */
+    .notes-section.active {
+      bottom: 60px;
+      transform: translateX(-50%) translateY(0%) rotate(0deg);
+
+    }
+
+    .unique-note-container textarea {
+      width: 100%;
+      height: 70px;
+      margin: 0;
+      color: rgb(0, 0, 0);
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      resize: none;
+      padding: 10px;
+      box-sizing: border-box;
+      border-top-left-radius: 50% 10px;
+      border-top-right-radius: 25% 5px;
+      border-bottom-left-radius: 5%;
+      border-bottom-right-radius: 5px 50%;
+
+    }
+
+    textarea::placeholder {
+      color: rgb(0, 0, 0);
+    }
+
+    .unique-delete-all-btn {
+      background-color: #dc3545;
+    }
+
+    .unique-delete-all-btn:hover {
+      background-color: #c82333;
+    }
+    
+    #uniqueNoteContainer {
+      position:relative;
+      margin:0 0 10px 0;
+    }
+    
+    #addUniqueNoteBtn {
+      position:absolute;
+      bottom:10px;
+      right:10px;
+      border-radius:50%;
+      height:30px;
+      width:30px;
+      margin:0;
+      padding:0;
+      background: rgba(0,0,0,0);
+      color: rgba(0,0,0,0.8);
+      border: 1px solid rgba(0,0,0,0.8);
+      font-size:1em;
+    }
+    
+    #startUniqueFreshBtn {
+      position:absolute;
+      bottom: 10px;
+      left: 50%;
+      margin:0;
+      padding:0 15px;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      height:30px;
+      width:fit-content;
+      border-top-left-radius: 50% 10px;
+      border-top-right-radius: 25% 35%;
+      border-bottom-left-radius: 15% 20%;
+      border-bottom-right-radius: 5px 50%;
+      background: rgba(255, 0, 0, 0.3);
+      border: 2px solid rgba(255, 0, 0, 0.7);
+      transform: translateX(-50%);
+    }
+    
+    .savedNote {
+      border:1px solid rgba(0,0,0,0.8);
+      border-radius:5px;
+      padding:7px;
+      box-sizing:border-box;
+      border-top-left-radius: 50% 10px;
+      border-top-right-radius: 25% 5px;
+      border-bottom-left-radius: 5%;
+      border-bottom-right-radius: 5px 50%;
+    }
+    
+    .savedNote p{
+      font-family: "Indie Flower";
+      color: rgba(0,0,0,0.8);
+      padding:0;
+      margin:0;
+    }
+
+    #uniqueNotesList {
+      max-height: 200px;
+      overflow-y: scroll;
+    }
+
+    #closeUniqueNotesBtn {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(242, 143, 28, 1);
+      box-shadow: 0 10px 20px 0 rgba(20, 8, 67, 1), inset 0 0 10px 0 rgba(255, 255, 255, 0.25);
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25pt;
+      z-index: 1;
+    }
+
+    #closeUniqueNotesBtn p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      padding: 0;
+      margin: 0;
+      width: 40px;
+      height: 40px;
+      color: rgba(12, 5, 40, 1);
+    }
+
+
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1100;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      width: 95%;
+      animation: slideUp 0.3s ease 0s 1;
+    }
+
+    @keyframes slideUp {
+      0% {
+        transform: translateY(100%) scale(0.7);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translateY(-10%) scale(1.1);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: translateY(0%) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="gameHeader">
+    <img width="100px" src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/The_Nightmare_Of_Hallows_Eve_Dark_1.svg?v=1725130891">
+  </div>
+
+  <div id="buttonAreaMain">
+    <!-- Notes Button (Initially Visible) -->
+    <button class="unique-button open-notes-btn" id="openUniqueNotesBtn"><img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/brown-texture_1253-178.jpg?v=1725896982">
+      <p1>Notes</p1>
+    </button>
+
+    <!-- Button to open map -->
+    <button id="open-map-btn" onclick="openMap()">
+      <img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/halloween-seamless-pattern-map-260nw-113588443.jpg?v=1725723438" alt="Map" id="map-image">
+      <p1>Map</p1>
+    </button>
+  </div>
+
+  <div class="container">
+
+
+
+
+    <!-- Notes Section (Initially Hidden) -->
+    <div id="uniqueNotesSection" class="notes-section">
+      <button class="unique-button" id="closeUniqueNotesBtn">
+        <p>×</p>
+      </button>
+      <div class="unique-note-container" id="uniqueNoteContainer">
+        <textarea id="uniqueNoteInput" placeholder="Create a note..."></textarea>
+        <button class="unique-button" id="addUniqueNoteBtn">+</button>
+        <button class="unique-button" id="saveUniqueNoteBtn" style="display:none;">Save Changes</button>
+      </div>
+
+      <div id="uniqueNotesList"></div>
+      
+      <!-- Modal for opening and editing a note in a popup -->
+      <div id="noteEditModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <textarea id="noteEditModalContent"></textarea>
+          <button class="unique-button" id="saveNoteEditModalBtn">Save</button>
+          <button class="unique-button" id="closeNoteEditModalBtn">Close</button>
+        </div>
+      </div>
+
+      <button class="unique-button unique-delete-all-btn" id="startUniqueFreshBtn">Delete All</button>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="uniqueConfirmModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <p>Are you sure you want to delete all notes?</p>
+        <button class="unique-button" id="confirmDeleteBtn">Yes, Delete All</button>
+        <button class="unique-button" id="cancelDeleteBtn">Cancel</button>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Hidden element that will hold the map -->
+    <div id="map-container" class="hidden">
+      <div id="close-btn" onclick="closeMap()">
+        <p>×</p>
+      </div>
+      <div id="map">
+        <img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/halloween-seamless-pattern-map-260nw-113588443.jpg?v=1725723438" alt="Map" id="map-image">
+
+        <!-- Hotspots -->
+        <div class="hotspot" style="top: 30%; left: 40%;" onclick="showInfo('info1', this)"></div>
+        <div class="hotspot" style="top: 50%; left: 60%;" onclick="showInfo('info2', this)"></div>
+
+        <!-- Info panels (hidden by default) -->
+        <div id="info1" class="info-panel hidden">Information about hotspot 1</div>
+        <div id="info2" class="info-panel hidden">Information about hotspot 2</div>
+      </div>
+    </div>
+
+    <!-- Launch Screen -->
+    <div id="launchScreen">
+      
+      <div class="storySegment">
+        <p><span style="font-size:2em; font-style:italic; font-weight:bold; margin-right:2px;">The Setting</span>
+          On the outskirts of a small, eerie village lies the ancient estate known as Grimwood Manor. Surrounded by dense, fog-filled woods and a sprawling, overgrown pumpkin patch, the manor has long been a subject of curiosity. Once a year, on Halloween night, the village comes alive with the All Hallows' Eve Festival, a celebration that draws villagers to the manor grounds for a night of mysterious games, masquerades, and eerie tales.<br><br>
+
+          The event is an old tradition, hosted by the current caretaker of the manor, and invites not just villagers but also the local eccentrics known for their peculiar talents. Though the manor is shrouded in mystery, the festival brings a sense of unity—until this year, when the discovery of a murder disrupts the celebration.</p>
+          
+          <button class="scrollDownLaunchButton">
+            <i class="fas fa-arrow-down"></i> <!-- Font Awesome Icon -->
+          </button>
+    
+  
+      </div>
+
+      <div class="storySegment">
+        <p><span style="font-size:2em; font-style:italic; font-weight:bold; margin-right:2px;">The Event</span>
+          As dawn breaks, news spreads that a murder has occurred in Grimwood Manor’s overgrown pumpkin patch. The victim, someone with ties to the manor’s shadowy history, was found surrounded by cryptic symbols and traces of an incomplete ritual. Now, suspicion blankets the festival, and attention shifts toward those who attended the event.<br><br>
+          Though some of the suspects are well-known figures in the village, others are connected to the manor by more secretive threads. The villagers must now work together to uncover the truth, but each person’s hidden ties to Grimwood or the supernatural world makes the investigation far more complex.</p>
+          
+          <button class="scrollDownLaunchButton">
+            <i class="fas fa-arrow-down"></i> <!-- Font Awesome Icon -->
+          </button>
+      </div>
+
+      <div class=storySegment>
+        <p><span style="font-size:2em; font-style:italic; font-weight:bold; margin-right:2px;">The Suspects</span>
+          Though not all live in the manor, each suspect has a unique connection to Grimwood and the strange powers surrounding it:</p>
+
+        <div class="launchCharacterCards">
+
+          <div class="launchCharacterCard">
+            <p><span style="font-size:1.5em; font-style:italic; font-weight:bold; margin-right:2px;">Mara Hemlock (The Medium):</span><br>
+              Mara doesn’t reside at Grimwood, but she’s often drawn to it because of the spiritual energy lingering in the old manor. Known for her ability to communicate with spirits, Mara channels the voices of the deceased, and her insight into the manor’s haunted past makes her a frequent guest during the festival. Was her connection to the spirit world used for something darker that night?
+            </p>
+          </div>
+
+          <div class="launchCharacterCard">
+            <p><span style="font-size:1.5em; font-style:italic; font-weight:bold; margin-right:2px;">Viktor Sable (The Occultist):</span>
+              <br>
+              A reclusive scholar who spends most of his time hidden away in a remote cottage, Viktor is fascinated by the manor’s historical ties to occult practices. His presence at the festival was no surprise, as he often uses the opportunity to study Grimwood's lore. Could one of his rituals have gone terribly wrong, or did he intentionally use his knowledge of the dark arts to commit murder?
+            </p>
+          </div>
+
+          <div class="launchCharacterCard">
+            <p><span style="font-size:1.5em; font-style:italic; font-weight:bold; margin-right:2px;">Elowen Thorn (The Herbalist):</span>
+              <br>
+              Elowen lives just outside the village in a quaint, ivy-covered cottage. She provides remedies and potions to villagers in need, using her deep understanding of herbs and magic. Her participation in the festival is a yearly tradition, where she offers concoctions for protection and luck. But with the murder at hand, whispers suggest that she may have used her herbal knowledge for more sinister purposes this time.
+            </p>
+          </div>
+
+          <div class="launchCharacterCard">
+            <p><span style="font-size:1.5em; font-style:italic; font-weight:bold; margin-right:2px;">Ronan Grey (The Outcast):</span>
+              Ronan lives on the edge of the village, deep in the surrounding woods. A man with a mysterious past and a connection to the wild, he rarely ventures into town except for the annual festival. His unpredictable nature and the blood-stained object found near the body have made him a prime suspect. Did Ronan’s darker instincts take over during the night, or is someone using his reputation to frame him?
+            </p>
+          </div>
+
+          <div class="launchCharacterCard">
+            <p><span style="font-size:1.5em; font-style:italic; font-weight:bold; margin-right:2px;">Jack Hawthorn (The Trickster):</span>
+              <br>
+              Jack is a local prankster and the unofficial guardian of the village’s pumpkin patch, which lies adjacent to Grimwood Manor. He lives in a small cabin near the patch and is known for his playful antics during the festival. However, his mischievous nature has always bordered on dangerous. Could this year’s pranks have gone too far, or is Jack hiding something more malicious behind his ever-present grin?
+            </p>
+          </div>
+        </div>
+        
+        <button class="scrollDownLaunchButton">
+          <i class="fas fa-arrow-down"></i> <!-- Font Awesome Icon -->
+        </button>
+      </div>
+      
+      <div class="storySegment">
+        <p><span style="font-size:2em; font-style:italic; font-weight:bold; margin-right:2px;">The Mystery</span>
+          The villagers, now desperate for answers, turn to the bravest among them—you. As the player, you must explore the manor and its grounds, uncovering the dark secrets that lie behind the smiles and masks of its residents. Each wax melt named after the characters provides a clue to the events of that fateful night. As you follow the trail of scent and story, you’ll gather hints and unravel hidden motives, but beware—every path could lead you to a different suspect.
+          <br><br>
+          Will you uncover the truth before the festival ends, or will Grimwood Manor claim another victim before the night is over?</p>
+          
+          <button class="scrollDownLaunchButton">
+            <i class="fas fa-arrow-down"></i> <!-- Font Awesome Icon -->
+          </button>
+      </div>
+      
+      <div class="storySegment">
+        <p><span style="font-size:2em; font-style:italic; font-weight:bold; margin-right:2px;">The Final Confrontation</span>
+          With all the clues in hand, you will confront the true killer. But even in the face of the truth, Grimwood Manor is a place of illusions. The real killer may be hiding in plain sight, or perhaps the dark forces at play are influencing more than just the human heart. <br><br>
+            Will you bring the murderer to justice, or will the secrets of Grimwood remain buried for another year?</p>
+            
+            <button class="scrollDownLaunchButton">
+              <i class="fas fa-arrow-down"></i> <!-- Font Awesome Icon -->
+            </button>
+      </div>
+
+      <button id="startButton" onclick="showCharacterSelection()">Start the Investigation!</button>
+    </div>
+
+    <!-- Character Selection -->
+    <div id="characterSelection" style="display:none;">
+      <h1>Select a Character</h1>
+      <p>Choose a character to start the path:</p>
+      <div class="paths">
+        <button onclick="startPath(1)">Lady Morgana (The Ghost)</button>
+        <button onclick="startPath(2)">Count Viktor (The Vampire)</button>
+        <button onclick="startPath(3)">Elvira Nightshade (The Witch)</button>
+        <button onclick="startPath(4)">Rolf Greystone (The Werewolf)</button>
+        <button onclick="startPath(5)">Jack O’Lantern (The Pumpkin Spirit)</button>
+      </div>
+    </div>
+
+    <!-- Flow Navigation -->
+    <div id="flow" style="display:none;">
+      <div id="story" class="story"></div>
+      <div id="controls" class="controls">
+        <button id="backButton" onclick="navigate(-1)" style="display:none;">Back</button>
+        <button id="nextButton" onclick="navigate(1)">Next</button>
+        <button id="guessButton" onclick="showCharacterChoices()" style="display:none;">Guess the Killer</button>
+        <button id="backToFlowButton" onclick="returnToFlow()" style="display:none;">Back to Flow</button>
+      </div>
+      <div id="reveal" class="reveal" style="display:none;">
+        <h2>Guess the Killer</h2>
+        <p>Select the character you think is the killer:</p>
+        <div id="characterChoices"></div>
+        <button onclick="restartGame()">Restart Game</button>
+        <button id="backToFlowButtonReveal" onclick="returnToFlow()">Back to Flow</button>
+      </div>
+      <div id="feedback" class="feedback" style="display:none;">
+        <p id="feedbackMessage"></p>
+        <button onclick="restartGame()">Restart Game</button>
+        <button id="backToGuessingScreenButton" onclick="returnToGuessingScreen()" style="display: none;">Back to Guessing Screen</button>
+
+      </div>
+    </div>
+
+    <!-- Clue Banner -->
+    <div id="clueBanner" class="closed">
+      <button id="toggleClues" onclick="toggleClueBanner()">
+        <p1>Clues So Far</p1>
+      </button>
+      <div id="clueContent">
+        <div id="clueList"></div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <script>
+    const paths = {
+      1: {
+        sequence: [
+          { name: "Lady Morgana", clue: "Starting with Lady Morgana reveals her deep knowledge of the unseen and the hidden truths she’s witnessed..." },
+          { name: "Count Viktor", clue: "Count Viktor’s dark secrets and mysterious actions are crucial to solving the case." },
+          { name: "Elvira Nightshade", clue: "Elvira’s magical influence and dark potions are significant in the investigation." },
+          { name: "Rolf Greystone", clue: "Rolf’s wild nature and transformations provide important clues." },
+          { name: "Jack O’Lantern", clue: "Jack O’Lantern’s fiery spirit and its connections are key to uncovering the murderer." }
+        ],
+        killer: "Count Viktor"
+      },
+      2: {
+        sequence: [
+          { name: "Count Viktor", clue: "Count Viktor’s nocturnal activities are suspicious and crucial to the investigation." },
+          { name: "Elvira Nightshade", clue: "Elvira’s dealings with Viktor and her dark magic are vital clues." },
+          { name: "Rolf Greystone", clue: "Rolf’s wild side and his connection with other characters are important." },
+          { name: "Jack O’Lantern", clue: "Jack’s fiery spirit and its effects are part of the investigation." },
+          { name: "Lady Morgana", clue: "Lady Morgana’s ghostly insights help to reveal the murderer." }
+        ],
+        killer: "Elvira Nightshade"
+      },
+      3: {
+        sequence: [
+          { name: "Elvira Nightshade", clue: "Elvira’s potions and spells are central to the investigation." },
+          { name: "Rolf Greystone", clue: "Rolf’s transformations and actions are influenced by Elvira’s magic." },
+          { name: "Jack O’Lantern", clue: "Jack’s fiery nature and its implications are key clues." },
+          { name: "Lady Morgana", clue: "Lady Morgana’s ghostly powers and observations are important." },
+          { name: "Count Viktor", clue: "Count Viktor’s hidden motives and actions are significant." }
+        ],
+        killer: "Jack O’Lantern"
+      },
+      4: {
+        sequence: [
+          { name: "Rolf Greystone", clue: "Rolf’s primal instincts and their effects are crucial to understanding the murder." },
+          { name: "Jack O’Lantern", clue: "Jack’s fiery destruction plays a role in the investigation." },
+          { name: "Lady Morgana", clue: "Lady Morgana’s mysterious actions and observations provide vital clues." },
+          { name: "Count Viktor", clue: "Count Viktor’s secrets and actions are important for solving the case." },
+          { name: "Elvira Nightshade", clue: "Elvira’s dark magic and her connections to the murder are significant." }
+        ],
+        killer: "Rolf Greystone"
+      },
+      5: {
+        sequence: [
+          { name: "Jack O’Lantern", clue: "Jack’s hidden flames and revenge are central to the investigation." },
+          { name: "Lady Morgana", clue: "Lady Morgana’s spectral observations and secrets are crucial clues." },
+          { name: "Count Viktor", clue: "Count Viktor’s hidden motives and actions play a role in the murder." },
+          { name: "Elvira Nightshade", clue: "Elvira’s dark magic and actions are significant." },
+          { name: "Rolf Greystone", clue: "Rolf’s connection to the murder is a key part of the case." }
+        ],
+        killer: "Lady Morgana"
+      }
+    };
+    
+    let currentPath = [];
+    let currentIndex = 0;
+    let selectedPath = null;
+
+    function showCharacterSelection() {
+      document.getElementById("launchScreen").style.display = "none";
+      document.getElementById("characterSelection").style.display = "block";
+    }
+
+    function startPath(pathNumber) {
+      selectedPath = paths[pathNumber];
+      currentPath = selectedPath.sequence;
+      currentIndex = 0;
+
+      // Fade out the character selection and then show the flow
+      fadeOutElement('characterSelection', () => {
+        document.getElementById("characterSelection").style.display = "none";
+        document.getElementById("flow").style.display = "block";
+        document.getElementById("clueBanner").style.display = "block";
+        document.getElementById("controls").style.display = "block";
+        document.getElementById("reveal").style.display = "none";
+        document.getElementById("feedback").style.display = "none";
+        document.getElementById("backToFlowButton").style.display = "none";
+        updateCharacterDisplay();
+      });
+    }
+
+    function updateCharacterDisplay() {
+      if (currentIndex >= 0 && currentIndex < currentPath.length) {
+        const character = currentPath[currentIndex];
+        document.getElementById("story").innerHTML = `
+            <h2>Current Character</h2>
+            <h1>${character.name}</h1>
+            <h3>Clue</h3>
+            <p>${character.clue}</p>
+        `;
+
+        document.getElementById("backButton").style.display = currentIndex > 0 ? "inline-block" : "none";
+        document.getElementById("nextButton").style.display = currentIndex < currentPath.length - 1 ? "inline-block" : "none";
+        document.getElementById("guessButton").style.display = currentIndex === currentPath.length - 1 ? "inline-block" : "none";
+
+        // Update clue banner
+        document.getElementById("clueList").innerHTML = currentPath.slice(0, currentIndex + 1).map(character => `
+            <div class="clueItem">
+            <h1>${character.name}</h1>
+            <p>${character.clue}</p>
+            </div>
+        `).join('');
+      }
+    }
+
+    function navigate(direction) {
+      fadeOutElement('story', () => {
+        currentIndex += direction;
+        updateCharacterDisplay();
+        fadeInElement('story');
+      });
+    }
+
+    function showCharacterChoices() {
+      fadeOutElement('controls', () => {
+        document.getElementById("controls").style.display = "none";
+        document.getElementById("reveal").style.display = "block";
+        document.getElementById("backToFlowButton").style.display = "inline-block";
+        let choicesHtml = selectedPath.sequence.map(character =>
+          `<button onclick="checkGuess('${character.name}')">${character.name}</button>`
+        ).join('');
+        document.getElementById("characterChoices").innerHTML = choicesHtml;
+        fadeInElement('reveal');
+      });
+    }
+
+    function checkGuess(guess) {
+      const correctKiller = selectedPath.killer;
+      const feedbackMessage = guess === correctKiller ?
+        `Correct! You’ve identified the killer correctly.` :
+        `Incorrect. Here is a clue to the killer: ${getClueForKiller(correctKiller)}`;
+
+      document.getElementById("feedbackMessage").textContent = feedbackMessage;
+      document.getElementById("reveal").style.display = "none";
+      document.getElementById("feedback").style.display = "block";
+      document.getElementById("backToGuessingScreenButton").style.display = "inline-block";
+    }
+
+    function getClueForKiller(killer) {
+      // Find the clue for the killer from the selected path
+      const killerCharacter = selectedPath.sequence.find(character => character.name === killer);
+      return killerCharacter ? killerCharacter.clue : "No clue available.";
+    }
+
+    function returnToGuessingScreen() {
+      fadeOutElement('feedback', () => {
+        document.getElementById("feedback").style.display = "none";
+        document.getElementById("reveal").style.display = "block";
+        document.getElementById("backToGuessingScreenButton").style.display = "none";
+        fadeInElement('reveal');
+      });
+    }
+
+    function returnToFlow() {
+      fadeOutElement('reveal', () => {
+        document.getElementById("reveal").style.display = "none";
+        document.getElementById("feedback").style.display = "none";
+        document.getElementById("controls").style.display = "block";
+        document.getElementById("backToFlowButton").style.display = "none";
+        fadeInElement('flow');
+      });
+    }
+
+    function restartGame() {
+      // Reset variables
+      currentPath = [];
+      currentIndex = 0;
+      selectedPath = null;
+
+      // Hide flow-related elements
+      document.getElementById("flow").style.display = "none";
+      document.getElementById("reveal").style.display = "none";
+      document.getElementById("feedback").style.display = "none";
+      document.getElementById("controls").style.display = "none";
+      document.getElementById("backToFlowButton").style.display = "none"; // Ensure back to flow button is hidden
+
+      // Show launch screen
+      document.getElementById("launchScreen").style.display = "block";
+    }
+
+    function toggleClueBanner() {
+      const clueBanner = document.getElementById("clueBanner");
+      if (clueBanner.classList.contains('closed')) {
+        clueBanner.classList.remove('closed');
+        clueBanner.classList.add('open');
+        document.getElementById("toggleClues").innerHTML = "<p1>Collapse Clues</p1>";
+      } else {
+        clueBanner.classList.remove('open');
+        clueBanner.classList.add('closed');
+        document.getElementById("toggleClues").innerHTML = "<p1>Clues So Far</p1>";
+      }
+    }
+
+    function fadeOutElement(elementId, callback) {
+      const element = document.getElementById(elementId);
+      element.classList.add('fade-out');
+      setTimeout(() => {
+        element.classList.add('hidden');
+        element.classList.remove('fade-out');
+        if (callback) callback();
+      }, 500); // Matches animation duration
+    }
+
+    function fadeInElement(elementId) {
+      const element = document.getElementById(elementId);
+      element.classList.remove('hidden');
+      element.classList.add('fade-in');
+      setTimeout(() => {
+        element.classList.remove('fade-in');
+      }, 500); // Matches animation duration
+    }
+
+    // Function to open the map
+    function openMap() {
+      const mapContainer = document.getElementById('map-container');
+      mapContainer.classList.add('active');
+    }
+
+    // Function to close the map
+    function closeMap() {
+      const mapContainer = document.getElementById('map-container');
+      mapContainer.classList.remove('active');
+      hideAllInfo();
+    }
+
+    // Function to show information on a specific hotspot
+    function showInfo(infoId, hotspot) {
+      hideAllInfo();
+
+      const infoBox = document.getElementById(infoId);
+      infoBox.classList.remove('hidden');
+      infoBox.style.display = 'block';
+
+      // Get the position of the hotspot relative to the map
+      const hotspotRect = hotspot.getBoundingClientRect();
+      const mapRect = document.getElementById('map').getBoundingClientRect();
+
+      // Set the info box position relative to the hotspot
+      let infoX = hotspotRect.left - mapRect.left + 30; // 30px to the right of the hotspot
+      let infoY = hotspotRect.top - mapRect.top + 30; // 30px above the hotspot
+
+      // Adjust if info box goes outside the map
+      if (infoX + infoBox.offsetWidth > mapRect.width) {
+        infoX = mapRect.width - infoBox.offsetWidth - 10; // keep it inside the right edge
+      }
+      if (infoY + infoBox.offsetHeight > mapRect.height) {
+        infoY = mapRect.height - infoBox.offsetHeight - 10; // keep it inside the bottom edge
+      }
+
+      // Set the calculated position
+      infoBox.style.left = `${infoX}px`;
+      infoBox.style.top = `${infoY}px`;
+    }
+
+    // Function to hide all info panels
+    function hideAllInfo() {
+      const infoPanels = document.querySelectorAll('.info-panel');
+      infoPanels.forEach(panel => {
+        panel.classList.add('hidden');
+        panel.style.display = 'none';
+      });
+    }
+
+    // Zoom and pan functionality for the map
+    let map = document.getElementById('map');
+    let mapImage = document.getElementById('map-image');
+    let isPanning = false;
+    let startX, startY, initialX = 0,
+      initialY = 0;
+
+    map.addEventListener('mousedown', (e) => {
+      isPanning = true;
+      startX = e.clientX - initialX;
+      startY = e.clientY - initialY;
+      map.style.cursor = 'grabbing';
+    });
+
+    map.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      e.preventDefault();
+      initialX = e.clientX - startX;
+      initialY = e.clientY - startY;
+      mapImage.style.transform = `translate(${initialX}px, ${initialY}px)`;
+    });
+
+    map.addEventListener('mouseup', () => {
+      isPanning = false;
+      map.style.cursor = 'grab';
+    });
+
+    map.addEventListener('mouseleave', () => {
+      isPanning = false;
+      map.style.cursor = 'grab';
+    });
+
+    let scale = 1;
+    map.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      scale += e.deltaY * -0.01;
+      scale = Math.min(Math.max(1, scale), 4);
+      mapImage.style.transform = `scale(${scale}) translate(${initialX}px, ${initialY}px)`;
+    });
+
+
+
+
+    const openUniqueNotesBtn = document.getElementById('openUniqueNotesBtn');
+    const closeUniqueNotesBtn = document.getElementById('closeUniqueNotesBtn');
+    const uniqueNotesSection = document.getElementById('uniqueNotesSection');
+    const addUniqueNoteBtn = document.getElementById('addUniqueNoteBtn');
+    const saveUniqueNoteBtn = document.getElementById('saveUniqueNoteBtn');
+    const uniqueNoteInput = document.getElementById('uniqueNoteInput');
+    const uniqueNotesList = document.getElementById('uniqueNotesList');
+    const startUniqueFreshBtn = document.getElementById('startUniqueFreshBtn');
+    const uniqueConfirmModal = document.getElementById('uniqueConfirmModal');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+    let editingNoteIndex = null; // To track the note being edited
+
+// Function to load saved notes from localStorage and add buttons
+    const loadUniqueNotes = () => {
+      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+      uniqueNotesList.innerHTML = ''; // Clear existing notes
+      notes.forEach((note, index) => {
+        const noteElement = document.createElement('div');
+        noteElement.innerHTML = `
+        <div class="savedNote">
+          <p>${note}</p>
+        </div>
+        
+          <button class="unique-button" onclick="openNoteInEditModal(${index})">Open in Popup</button>
+          <button class="unique-button" onclick="editUniqueNote(${index})">Edit</button>
+          <button class="unique-button" onclick="deleteUniqueNote(${index})">Delete</button>
+        `;
+        uniqueNotesList.appendChild(noteElement);
+      });
+    };
+
+    // Function to add a new note
+    addUniqueNoteBtn.addEventListener('click', () => {
+      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+      const newNote = uniqueNoteInput.value;
+      if (newNote.trim()) {
+        notes.push(newNote);
+        localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+        uniqueNoteInput.value = '';
+        loadUniqueNotes();
+      }
+    });
+
+    // Function to edit a note
+    const editUniqueNote = (index) => {
+      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+      uniqueNoteInput.value = notes[index];
+      editingNoteIndex = index; // Save the index of the note being edited
+      addUniqueNoteBtn.style.display = 'none';
+      saveUniqueNoteBtn.style.display = 'inline-block';
+    };
+
+    // Function to save changes to a note
+    saveUniqueNoteBtn.addEventListener('click', () => {
+      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+      const updatedNote = uniqueNoteInput.value;
+      if (updatedNote.trim()) {
+        notes[editingNoteIndex] = updatedNote; // Update the note at the saved index
+        localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+        uniqueNoteInput.value = '';
+        loadUniqueNotes();
+        editingNoteIndex = null;
+        addUniqueNoteBtn.style.display = 'inline-block';
+        saveUniqueNoteBtn.style.display = 'none';
+      }
+    });
+
+    // Function to delete a single note
+    const deleteUniqueNote = (index) => {
+      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+      notes.splice(index, 1);
+      localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+      loadUniqueNotes();
+    };
+
+    // Show the confirm modal for deleting all notes
+    startUniqueFreshBtn.addEventListener('click', () => {
+      uniqueConfirmModal.style.display = 'flex';
+    });
+
+    // Confirm deletion of all notes
+    confirmDeleteBtn.addEventListener('click', () => {
+      localStorage.removeItem('uniqueNotes');
+      loadUniqueNotes();
+      uniqueConfirmModal.style.display = 'none';
+    });
+
+    // Cancel deletion and hide modal
+    cancelDeleteBtn.addEventListener('click', () => {
+      uniqueConfirmModal.style.display = 'none';
+    });
+    
+    
+    // Note Edit Modal elements
+const noteEditModal = document.getElementById('noteEditModal');
+const noteEditModalContent = document.getElementById('noteEditModalContent');
+const saveNoteEditModalBtn = document.getElementById('saveNoteEditModalBtn');
+const closeNoteEditModalBtn = document.getElementById('closeNoteEditModalBtn');
+
+let currentNoteEditIndex = null; // Track which note is being opened in the popup
+
+// Function to open a note in the noteEditModal
+const openNoteInEditModal = (index) => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  currentNoteEditIndex = index; // Store the index of the note
+  noteEditModalContent.value = notes[index]; // Populate the modal with the note content
+  noteEditModal.style.display = 'flex'; // Show the modal
+};
+
+// Function to save changes made in the noteEditModal
+saveNoteEditModalBtn.addEventListener('click', () => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  const updatedNote = noteEditModalContent.value;
+  if (updatedNote.trim()) {
+    notes[currentNoteEditIndex] = updatedNote; // Update the note in the array
+    localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+    loadUniqueNotes(); // Reload the notes list
+    noteEditModal.style.display = 'none'; // Close the popup modal
+  }
+});
+
+// Function to close the noteEditModal
+closeNoteEditModalBtn.addEventListener('click', () => {
+  noteEditModal.style.display = 'none'; // Hide the modal
+});
+
+
+    
+
+    // Function to open the notes section by adding the active class
+    openUniqueNotesBtn.addEventListener('click', () => {
+      uniqueNotesSection.classList.add('active'); // Slide up by adding 'active' class
+      openUniqueNotesBtn.style.display = 'none'; // Hide the open button
+      loadUniqueNotes(); // Load notes from localStorage
+    });
+
+    // Function to close the notes section by removing the active class
+    closeUniqueNotesBtn.addEventListener('click', () => {
+      uniqueNotesSection.classList.remove('active'); // Slide down by removing 'active' class
+      openUniqueNotesBtn.style.display = 'block'; // Show the open button again
+    });
+
+
+    // Load notes on page load
+    window.onload = loadUniqueNotes;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  document.querySelectorAll('.scrollDownLaunchButton').forEach(button => {
+  button.addEventListener('click', function() {
+    let currentSegment = this.closest('.storySegment'); // Find the current story segment
+    let nextSegment = currentSegment.nextElementSibling; // Find the next story segment
+
+    if (nextSegment) {
+      let offset = 100; // 100px offset from the top of the screen
+      let nextSegmentTop = nextSegment.getBoundingClientRect().top + window.scrollY - offset;
+      
+      // Scroll smoothly to the next segment 100px from the top of the screen
+      window.scrollTo({
+        top: nextSegmentTop,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+
+  </script>
+</body>
+
+</html>
+
