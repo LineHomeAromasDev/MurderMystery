@@ -125,7 +125,7 @@
     .container {
       max-width: 600px;
       margin: auto;
-      padding: 90px 15px 120px 15px;
+      padding: 0;
       /* Space for the clue banner */
       height: 100%;
       width: 100%;
@@ -136,6 +136,7 @@
 
     #launchScreen {
       text-align: left;
+      padding: 90px 0 120px 0
     }
 
     .storySegment {
@@ -191,9 +192,11 @@
       overflow-x: scroll;
       width: 100%;
       margin-top:20px;
+      scroll-snap-type: x mandatory;
     }
 
     .launchCharacterCard {
+      scroll-snap-align: center;
       min-width: 85%;
       margin: 0 7.5px;
       padding: 15px;
@@ -219,17 +222,179 @@
     #startButton:hover {
       background-color: rgba(242, 143, 28, 1);
     }
+    
+    #characterSelection {
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      min-height:100vh;
+      overflow:hidden;
+      padding: 90px 0 110px 0;
+      z-index:1200;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter:blur(10px);
+      
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction:column;
+      animation:cardScreen 0.3s ease-out;
+    }
+    
+    @keyframes cardScreen {
+      0% {
+        opacity:0;
+      }
+      100% {
+        opacity:1;
+      }
+    }
+    
+    #characterSelection h1, #characterSelection p {
+      display:block;
+      line-height:1;
+      padding:0;
+      margin:0;
+    }
 
     .paths {
-      width: 100%;
+      position:relative;
+      height:100%;
+      max-width:100vw;
+      min-height:480px;
       display: flex;
       flex-wrap: nowrap;
       overflow-x: scroll;
+      z-index:0;
+      box-sizing:border-box;
+      scroll-snap-type: x mandatory;
     }
 
     .paths button {
-      min-width: 80vw;
-      min-height: 400px;
+      scroll-snap-align: center;
+      min-width: 77.5vw;
+      height: 450px;
+      padding:0;
+      box-shadow: 0 0 20px 5px rgba(0,0,0,0.3);
+    }
+    
+    .path1 {
+      z-index:5;
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translateY(-50%) translateX(-50%);
+      animation: card1 2s ease 0s;
+    }
+    .path2 {
+      z-index:4;
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translateY(-50%) translateX(105%);
+      animation: card2 2s ease 0s;
+    }
+    .path3 {
+      z-index:3;
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translateY(-50%) translateX(210%);
+      animation: card3 2s ease 0s;
+    }
+    .path4 {
+      z-index:2;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translateY(-50%) translateX(315%);
+    animation: card4 2s ease 0s;
+    }
+    
+    .path5 {
+            z-index:1;
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform: translateY(-50%) translateX(420%);
+            animation: card5 2s ease 0s;
+    }
+
+    
+    @keyframes card1 {
+      0% {
+        transform: scale(.3) translateY(0%) translateX(-50%);
+        opacity:0;
+      }
+      50% {
+        transform: rotate(-10deg) scale(.3) translateY(-150%) translateX(0);
+        opacity:1;
+      }
+      100% {
+        transform: scale(1) translateY(-50%) translateX(0);
+        opacity: 1;
+      }
+    }
+    
+   @keyframes card2 {
+      0% {
+        transform: scale(.3) translateY(0%) translateX(0);
+        opacity:0;
+      }
+      50% {
+        transform: rotate(-6deg) scale(.3) translateY(-150%) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translateY(-50%) translateX(105%);
+        opacity:1;
+      }
+    }
+    
+   @keyframes card3 {
+      0% {
+        transform: scale(.3) translateY(0%) translateX(0);
+        opacity:0;
+      }
+      50% {
+        transform: rotate(-2deg) scale(.3) translateY(-150%) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translateY(-50%) translateX(210%);
+        opacity:1;
+      }
+    }
+    
+   @keyframes card4 {
+      0% {
+        transform: scale(.3) translateY(0%) translateX(0);
+        opacity:0;
+      }
+      50% {
+        transform: rotate(2deg) scale(.3) translateY(-150%) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translateY(-50%) translateX(315%);
+        opacity:1;
+      }
+    }
+    
+   @keyframes card5 {
+      0% {
+        transform: scale(.3) translateY(0%) translateX(0);
+        opacity:0;
+      }
+      50% {
+        transform: rotate(6deg) scale(.3) translateY(-150%) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translateY(-50%) translateX(420%);
+        opacity:1;
+      }
     }
 
     button {
@@ -404,43 +569,57 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
       display: flex;
       visibility: hidden;
-      justify-content: center;
-      align-items: flex-start;
       z-index: 1100;
       transition: all 0.5s ease;
-      transform: scale(1.4) rotate(5deg);
       filter: opacity(0);
+
     }
 
     #map {
       position: relative;
-      width: 100%;
       height: 100%;
-      overflow: scroll;
       z-index: 0;
+      width: auto;
+      overflow: auto;
     }
 
-    #map-image {
-      display: flex;
-      width: 150%;
-      height: 150%;
-      object-fit: cover;
+    #mapImage {
+      max-width: auto;
+      height:150%;
       cursor: grab;
     }
 
     .hotspot {
+      display:flex;
+      align-items: center;
+      justify-content:center;
+      color:rgba(0,0,0,1);
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(255,255,255,1);
       border-radius: 50%;
       cursor: pointer;
+      animation: pulse 1.5s ease-in-out 0s infinite alternate;
+      box-shadow: 0 5px 10px 0 rgba(0,0,0,0.3);
+    }
+    
+    @keyframes pulse {
+      0%{
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 1),  0px 0px 0px 0px rgba(255, 255, 255, 1);
+      }
+      
+      100% {
+        transform: scale(1.3) rotate(10deg);
+        box-shadow: 0px 0px 0px 5px rgba(255, 255, 255, 0), 0px 0px 0px 10px rgba(255, 255, 255, 0);
+      }
     }
 
     .info-panel {
@@ -457,36 +636,38 @@
 
     #close-btn {
       position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 30px;
+      left: 30px;
+      transform: translateX(0%);
       color: white;
-      background-color: rgba(242, 143, 28, 1);
-      box-shadow: 0 10px 20px 0 rgba(20, 8, 67, 1), inset 0 0 10px 0 rgba(255, 255, 255, 0.25);
-      padding: 0;
+      background:rgba(60,60,60,0.8);
+      box-shadow: 0 10px 20px 0 rgba(0,0,0, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 0 10px 0 0;
       margin: 0;
       cursor: pointer;
-      border-radius: 50%;
-      width: 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(100,100,100,1);
+      width: fit-content;
       height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 25pt;
-      z-index: 1;
+      font-size: 0.9em;
+      z-index: 1000;
     }
     
-    #close-btn p {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -55%);
-          padding: 0;
-          margin: 0;
-          width: 40px;
-          height: 40px;
-          color: rgba(12, 5, 40, 1);
-        }
+    #close-btn span{
+      height:40px;
+      width:40px;
+      background:rgba(50,50,50,0.8);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin: 0 5px 0 0;
+      font-size:14pt;
+              }
 
 
 
@@ -496,14 +677,14 @@
     .notes-section {
       width: calc(100% - 30px);
       max-height: 50vh;
-      padding: 20px;
+      padding: 20px 20px 40px 20px;
       background-image: url(https://cdn.shopify.com/s/files/1/0550/8782/5151/files/brown-texture_1253-178.jpg?v=1725896982);
       background-size: cover;
       position: fixed;
       bottom: 0;
       /* Hidden below the screen initially */
       left: 50%;
-      transform: translateX(-50%) translateY(100%) rotate(10deg);
+      transform: scale(0.7) translateX(-50%) translateY(120%) rotate(-10deg);
       transition: all 0.3s ease;
       /* Smooth transition when sliding up/down */
       z-index: 900;
@@ -524,7 +705,7 @@
       height: 70px;
       margin: 0;
       color: rgb(0, 0, 0);
-      background: rgba(0, 0, 0, 0.15);
+      background: rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       resize: none;
       padding: 10px;
@@ -533,7 +714,7 @@
       border-top-right-radius: 25% 5px;
       border-bottom-left-radius: 5%;
       border-bottom-right-radius: 5px 50%;
-
+      border: 1px solid rgba(0,0,0,0.8);
     }
 
     textarea::placeholder {
@@ -610,6 +791,20 @@
       max-height: 200px;
       overflow-y: scroll;
     }
+    
+    #uniqueNotesList button{
+      font-family:"Indie Flower";
+      border:2px solid rgba(23, 176, 50, 1);
+      border-radius:5px;
+      padding:7px;
+      box-sizing:border-box;
+      border-top-left-radius: 50% 25%;
+      border-top-right-radius: 25% 50%;
+      border-bottom-left-radius: 30%;
+      border-bottom-right-radius: 20% 30%;
+      background: rgba(23, 176, 50, 0.2);
+      color: rgba(255, 255, 255, 1);
+    }
 
     #closeUniqueNotesBtn {
       position: absolute;
@@ -642,7 +837,23 @@
       height: 40px;
       color: rgba(12, 5, 40, 1);
     }
-
+    
+    #startUniqueFreshBtn {
+      font-family:"Indie Flower";
+    }
+    
+    #saveUniqueNoteBtn {
+      border:2px solid rgba(23, 176, 50, 1);
+      border-radius:5px;
+      padding:7px;
+      box-sizing:border-box;
+      border-top-left-radius: 50% 10px;
+      border-top-right-radius: 25% 5px;
+      border-bottom-left-radius: 5%;
+      border-bottom-right-radius: 5px 50%;
+      background: rgba(23, 176, 50, 0.2);
+      color: rgba(255, 255, 255, 1);
+    }
 
 
     /* Modal Styles */
@@ -686,6 +897,15 @@
         opacity: 1;
       }
     }
+    
+@media screen and (min-width:768px) {
+      .paths button {
+      scroll-snap-align: center;
+      min-width: 30vw;
+      height: 450px;
+      padding: 0;
+      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
+    }
   </style>
 </head>
 
@@ -703,7 +923,7 @@
 
     <!-- Button to open map -->
     <button id="open-map-btn" onclick="openMap()">
-      <img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/halloween-seamless-pattern-map-260nw-113588443.jpg?v=1725723438" alt="Map" id="map-image">
+      <img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/halloween-seamless-pattern-map-260nw-113588443.jpg?v=1725723438" alt="Map" id="mapImage">
       <p1>Map</p1>
     </button>
   </div>
@@ -718,6 +938,7 @@
       <button class="unique-button" id="closeUniqueNotesBtn">
         <p>×</p>
       </button>
+      
       <div class="unique-note-container" id="uniqueNoteContainer">
         <textarea id="uniqueNoteInput" placeholder="Create a note..."></textarea>
         <button class="unique-button" id="addUniqueNoteBtn">+</button>
@@ -753,20 +974,27 @@
 
     <!-- Hidden element that will hold the map -->
     <div id="map-container" class="hidden">
-      <div id="close-btn" onclick="closeMap()">
-        <p>×</p>
-      </div>
+
       <div id="map">
-        <img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/halloween-seamless-pattern-map-260nw-113588443.jpg?v=1725723438" alt="Map" id="map-image">
+        <img src="https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Map_mockup.png?v=1725986955" alt="Map" id="mapImage">
 
         <!-- Hotspots -->
-        <div class="hotspot" style="top: 30%; left: 40%;" onclick="showInfo('info1', this)"></div>
-        <div class="hotspot" style="top: 50%; left: 60%;" onclick="showInfo('info2', this)"></div>
+        <div class="hotspot" style="top: 30%; left: 40%;" onclick="showInfo('info1', this)"><span>?<span></div>
+        <div class="hotspot" style="top: 50%; left: 60%;" onclick="showInfo('info2', this)"><span>?<span></div>
+        <div class="hotspot" style="top: 380px; left: 635px;" onclick="showInfo('info3', this)"><span>?<span></div>
+
 
         <!-- Info panels (hidden by default) -->
         <div id="info1" class="info-panel hidden">Information about hotspot 1</div>
         <div id="info2" class="info-panel hidden">Information about hotspot 2</div>
+        <div id="info3" class="info-panel hidden">Information about hotspot 3</div>
       </div>
+      
+              
+              <div id="close-btn" onclick="closeMap()">
+                <span>×</span><p>Close Map</p>
+              </div>
+              
     </div>
 
     <!-- Launch Screen -->
@@ -862,6 +1090,7 @@
       </div>
 
       <button id="startButton" onclick="showCharacterSelection()">Start the Investigation!</button>
+      
     </div>
 
     <!-- Character Selection -->
@@ -869,11 +1098,11 @@
       <h1>Select a Character</h1>
       <p>Choose a character to start the path:</p>
       <div class="paths">
-        <button onclick="startPath(1)">Lady Morgana (The Ghost)</button>
-        <button onclick="startPath(2)">Count Viktor (The Vampire)</button>
-        <button onclick="startPath(3)">Elvira Nightshade (The Witch)</button>
-        <button onclick="startPath(4)">Rolf Greystone (The Werewolf)</button>
-        <button onclick="startPath(5)">Jack O’Lantern (The Pumpkin Spirit)</button>
+        <button class="path1" onclick="startPath(1)">Lady Morgana (The Ghost)</button>
+        <button class="path2" onclick="startPath(2)">Count Viktor (The Vampire)</button>
+        <button class="path3" onclick="startPath(3)">Elvira Nightshade (The Witch)</button>
+        <button class="path4" onclick="startPath(4)">Rolf Greystone (The Werewolf)</button>
+        <button class="path5" onclick="startPath(5)">Jack O’Lantern (The Pumpkin Spirit)</button>
       </div>
     </div>
 
@@ -1177,46 +1406,6 @@
       });
     }
 
-    // Zoom and pan functionality for the map
-    let map = document.getElementById('map');
-    let mapImage = document.getElementById('map-image');
-    let isPanning = false;
-    let startX, startY, initialX = 0,
-      initialY = 0;
-
-    map.addEventListener('mousedown', (e) => {
-      isPanning = true;
-      startX = e.clientX - initialX;
-      startY = e.clientY - initialY;
-      map.style.cursor = 'grabbing';
-    });
-
-    map.addEventListener('mousemove', (e) => {
-      if (!isPanning) return;
-      e.preventDefault();
-      initialX = e.clientX - startX;
-      initialY = e.clientY - startY;
-      mapImage.style.transform = `translate(${initialX}px, ${initialY}px)`;
-    });
-
-    map.addEventListener('mouseup', () => {
-      isPanning = false;
-      map.style.cursor = 'grab';
-    });
-
-    map.addEventListener('mouseleave', () => {
-      isPanning = false;
-      map.style.cursor = 'grab';
-    });
-
-    let scale = 1;
-    map.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      scale += e.deltaY * -0.01;
-      scale = Math.min(Math.max(1, scale), 4);
-      mapImage.style.transform = `scale(${scale}) translate(${initialX}px, ${initialY}px)`;
-    });
-
 
 
 
@@ -1245,9 +1434,11 @@
           <p>${note}</p>
         </div>
         
+        <div class="savedNoteBtns">
           <button class="unique-button" onclick="openNoteInEditModal(${index})">Open in Popup</button>
           <button class="unique-button" onclick="editUniqueNote(${index})">Edit</button>
           <button class="unique-button" onclick="deleteUniqueNote(${index})">Delete</button>
+        </div>
         `;
         uniqueNotesList.appendChild(noteElement);
       });
@@ -1400,4 +1591,5 @@ closeNoteEditModalBtn.addEventListener('click', () => {
 </body>
 
 </html>
+
 
