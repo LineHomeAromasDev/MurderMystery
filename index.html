@@ -30,10 +30,14 @@
     input,
     p1,
     h1,
+    h2,
+    h3,
     p,
     textarea {
       font-family: "Barlow Condensed";
       text-transform: uppercase;
+      margin:0;
+      padding:0;
     }
 
     textarea {
@@ -136,14 +140,15 @@
 
     #launchScreen {
       text-align: left;
-      padding: 90px 0 120px 0
+      padding: 90px 20px 120px 20px
     }
 
     .storySegment {
+      position:relative;
       padding: 20px;
       margin: 20px 0;
       box-sizing: border-box;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(12, 5, 40, 1);
       border-radius: 20px;
       display:flex;
       flex-direction:column;
@@ -166,8 +171,8 @@
       cursor: pointer;
       margin-top: 15px;
       border-radius:50%;
-      width:35px;
-      height:35px;
+      width:40px;
+      height:40px;
       border: 2px solid rgba(255,255,255,0.7);
     }
     
@@ -177,33 +182,93 @@
       left:50%;
       transform: translate(-50%,-50%);
       font-size: 20px;
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,1);
     }
     
     .scrollDownLaunchButton:hover i {
       color: rgba(255,255,255,0.7);
     }
     
+    #scrollCardLaunchButton {
+      position:absolute;
+      top:50%;
+      right:15px;
+      transform: translateY(0);
+      display: flex;
+      align-items:center;
+      justify-content:center;
+      padding: 0;
+      margin:0;
+      border: none;
+      background-color: rgba(12, 5, 40, 1);
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(255, 255, 255, 1);
+      z-index:100;
+    }
 
-    .launchCharacterCards {
+    #scrollCardLaunchButton i {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 1);
+      margin:0;
+      padding:0;
+      transform: rotate(-90deg);
+    }
+
+    #scrollCardLaunchButton:hover i {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .gradient-overlay {
+            position: absolute;
+            top: calc(50% + 25px);
+            transform: translateY(-50%);
+            width: 30px; /* Width of the gradient overlay */
+            pointer-events: none; /* Ensure it doesn't interfere with content interactions */
+            transition: opacity 0.3s ease; /* Smooth transition */
+            opacity: 1;
+            z-index:100;
+            height:360px;
+            padding:0;
+        }
+
+        .gradient-overlay.left {
+            left: 19px;
+            background: linear-gradient(to right, rgba(12, 5, 40, 1), rgba(12, 5, 40, 0));
+        }
+
+        .gradient-overlay.right {
+            right: 19px;
+            background: linear-gradient(to left, rgba(12, 5, 40, 1), rgba(12, 5, 40, 0));
+        }
+    
+
+    #launchCharacterCards {
+      position:relative;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       overflow-x: scroll;
       width: 100%;
-      margin-top:20px;
+      height:350px;
+      margin: 20px 0 0 0;
       scroll-snap-type: x mandatory;
+      box-sizing:border-box ;
     }
 
     .launchCharacterCard {
       scroll-snap-align: center;
       min-width: 85%;
+      height:fit-content;
       margin: 0 7.5px;
       padding: 15px;
       box-sizing: border-box;
       border: 2px solid white;
       border-radius: 15px;
-      backdrop-filter: brightness(1.2) saturate(1.2);
+      backdrop-filter: brightness(1.4) saturate(1.4);
+      box-sizing:border-box ;
     }
 
     .launchCharacterCard p {
@@ -227,19 +292,18 @@
       position: fixed;
       top:0;
       left:0;
-      width:100%;
+      width:100vw;
       min-height:100vh;
       overflow:hidden;
       padding: 90px 0 110px 0;
       z-index:1200;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter:blur(10px);
-      
+      background: rgba(0,0,0,0.5);
+      backdrop-filter:blur(15px);
       display:flex;
       align-items: center;
       justify-content: center;
       flex-direction:column;
-      animation:cardScreen 0.3s ease-out;
+      animation:cardScreen 0.6s ease;
     }
     
     @keyframes cardScreen {
@@ -257,145 +321,118 @@
       padding:0;
       margin:0;
     }
+    
+    .characterSelectionText {
+      position:absolute;
+      top:110px;
+      left:50%;
+      transform: translateX(-50%);
+      width:100%;
+      height:200vh;
+    }
+    
+    .characterSelectionRestart {
+      position:absolute;
+      top:100vh;
+      left:50%;
+      transform: translateX(-50%) translateY(-200%);
+      width:fit-content;
+      height:50px;
+      width:50px;
+      border: 2px solid rgba(255,255,255,1);
+      border-radius:50%;
+      background: transparent;
+      font-size:20pt;
+      margin:0;
+    }
+    
+    .characterSelectionRestart p {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+    }
 
     .paths {
-      position:relative;
-      height:100%;
-      max-width:100vw;
-      min-height:480px;
+      position:absolute;
+      top:calc(21vh);
+      left:0;
+      height:40vh;
+      width:100%;
       display: flex;
+      flex-direction:row;
       flex-wrap: nowrap;
-      overflow-x: scroll;
-      z-index:0;
+      overflow-x: auto;
+      z-index:1;
       box-sizing:border-box;
       scroll-snap-type: x mandatory;
+      animation: cards 1s ease 0s;
+    }
+    
+    @keyframes cards{
+      0% {
+        transform:scale(3) translateX(0px) rotate(0deg);
+        opacity:0;
+      }
+      50% {
+        transform: scale(1) translateX(0px) rotate(0deg);
+        opacity: 1;
+      }
+      75% {
+        transform: scale(1.1) translateX(0px) rotate(2.5deg);
+        opacity: 1;
+      }
+      100% {
+        transform:scale(1) translateX(0) rotate(0deg);
+        opacity:1;
+      }
     }
 
     .paths button {
-      scroll-snap-align: center;
-      min-width: 77.5vw;
-      height: 450px;
-      padding:0;
-      box-shadow: 0 0 20px 5px rgba(0,0,0,0.3);
+      
     }
     
-    .path1 {
+    .character-name {
+      width: auto;
+      height: auto;
+      text-align: left;
+      background: rgba(242, 143, 28, 1);
+      padding:5px 10px 10px 10px;
+      border-radius:0 5px 5px 0;
+    }
+    
+    .path {
       z-index:5;
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform: translateY(-50%) translateX(-50%);
       animation: card1 2s ease 0s;
-    }
-    .path2 {
-      z-index:4;
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform: translateY(-50%) translateX(105%);
-      animation: card2 2s ease 0s;
-    }
-    .path3 {
-      z-index:3;
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform: translateY(-50%) translateX(210%);
-      animation: card3 2s ease 0s;
-    }
-    .path4 {
-      z-index:2;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translateY(-50%) translateX(315%);
-    animation: card4 2s ease 0s;
+      scroll-snap-align: center;
+      width: auto;
+      height: 100%;
+      aspect-ratio: 1/1.4;
+      padding: 0;
+      margin: 0;
+      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(242, 143, 28, 1);
+      background: black;
+      border-radius:15px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
     }
     
-    .path5 {
-            z-index:1;
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform: translateY(-50%) translateX(420%);
-            animation: card5 2s ease 0s;
+    @keyframes card {
+      0% {
+        left:0;
+        transform: scale(0) translateY(50%) translateX(0%);
+        opacity:0;
+      }
+      
+      100% {
+        left:50%;
+        transform: scale(1) translateY(-50%) translateX(-50%);
+        opacity: 1;
+      }
     }
 
-    
-    @keyframes card1 {
-      0% {
-        transform: scale(.3) translateY(0%) translateX(-50%);
-        opacity:0;
-      }
-      50% {
-        transform: rotate(-10deg) scale(.3) translateY(-150%) translateX(0);
-        opacity:1;
-      }
-      100% {
-        transform: scale(1) translateY(-50%) translateX(0);
-        opacity: 1;
-      }
-    }
-    
-   @keyframes card2 {
-      0% {
-        transform: scale(.3) translateY(0%) translateX(0);
-        opacity:0;
-      }
-      50% {
-        transform: rotate(-6deg) scale(.3) translateY(-150%) translateX(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1) translateY(-50%) translateX(105%);
-        opacity:1;
-      }
-    }
-    
-   @keyframes card3 {
-      0% {
-        transform: scale(.3) translateY(0%) translateX(0);
-        opacity:0;
-      }
-      50% {
-        transform: rotate(-2deg) scale(.3) translateY(-150%) translateX(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1) translateY(-50%) translateX(210%);
-        opacity:1;
-      }
-    }
-    
-   @keyframes card4 {
-      0% {
-        transform: scale(.3) translateY(0%) translateX(0);
-        opacity:0;
-      }
-      50% {
-        transform: rotate(2deg) scale(.3) translateY(-150%) translateX(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1) translateY(-50%) translateX(315%);
-        opacity:1;
-      }
-    }
-    
-   @keyframes card5 {
-      0% {
-        transform: scale(.3) translateY(0%) translateX(0);
-        opacity:0;
-      }
-      50% {
-        transform: rotate(6deg) scale(.3) translateY(-150%) translateX(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1) translateY(-50%) translateX(420%);
-        opacity:1;
-      }
-    }
 
     button {
       background-color: rgba(242, 143, 28, 1);
@@ -411,14 +448,101 @@
     button:hover {
       background-color: #555;
     }
-
-    .story {
-      margin-top: 20px;
-      font-size: 1.2em;
+    
+    #flow {
+      margin:0;
+      padding:100px 0 100px 0;
+      width:100vw;
+      height:auto;
     }
+    
+   .story {
+     position:relative;
+     box-sizing: border-box;
+     text-align:left;
+     display:flex;
+     flex-wrap: wrap;
+     justify-content: center;
+   }
+   
+   .characterProfileRow {
+     width:100%;
+     margin:10px 0;
+     padding:0 20px;
+     display:flex;
+     flex-wrap: nowrap;
+     box-sizing: border-box;
+     gap:15px;
+   }
+   
+   .characterProfileColumn {
+     display:flex;
+     flex-direction:column;
+     box-sizing: border-box;
+     height:auto;
+     background: rgba(20, 8, 67, 1);
+     border-radius: 15px;
+     padding:15px;
+   }
+   
+   .halfWidth {
+     max-width:50%;
+     margin:0;
+   }
+   
+   .halfWidthImg {
+     width:50%;
+     aspect-ratio: 1/1;
+     padding:0;
+     overflow:hidden;
+     border-radius:50%;
+     box-shadow: 0 10px 15px 0 rgba(0,0,0,0.5);
+   }
+   
+   .fullWidth {
+     width: calc(100%);
+   }
+   
+   #redHerring {
+     position: absolute;
+     bottom: 0;
+     left: 15px;
+     transition: all 0.5s ease;
+   }
+   
+   #redHerring.active {
+     position: absolute;
+     bottom: 0;
+     left: 15px;
+   }
+   
+   #redHerringButton {
+     
+   }
 
     .controls {
-      margin-top: 20px;
+      margin: 0;
+      width:100%;
+    }
+    
+    #characterChoices {
+      width:100%;
+      height:auto;
+      display:flex;
+      flex-direction:row;
+      flex-wrap:nowrap;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .killerChoice {
+      min-width:200px;
+      aspect-ratio:1/1.4;
+      height:auto;
+      scroll-snap-align:center;
+      border-radius: 15px;
+      background: rgba(0,0,0,1);
+      border: 2px solid rgba(242, 143, 28, 1);
     }
 
     .reveal,
@@ -434,32 +558,52 @@
 
     /* Fade-in and fade-out animations */
     @keyframes fadeIn {
-      from {
-        opacity: 0;
+      0% {
+        opacity: 1;
+        transform: scale(0.9) translateX(0) rotateY(15deg);
+        filter: blur(0px);
+      }
+      
+      50% {
+        opacity: 1;
+        transform: scale(1.05) translateX(0);
+        filter: blur(0px);
       }
 
-      to {
+      100% {
         opacity: 1;
+        transform: scale(1) translateX(0);
+        filter: blur(0px);
       }
     }
 
     @keyframes fadeOut {
-      from {
+      0% {
         opacity: 1;
+        transform: scale(1) translateX(0);
+        filter: blur(0px);
+      }
+      
+      50% {
+        opacity: 1;
+        transform: scale(1.05) translateX(0);
+        filter: blur(0px);
       }
 
-      to {
-        opacity: 0;
+      100% {
+        opacity: 1;
+        transform: scale(0.9) translateX(0) rotateY(15deg);
+        filter: blur(0px);
       }
     }
 
     /* Classes to apply the animations */
     .fade-in {
-      animation: fadeIn 0.5s forwards;
+      animation: fadeIn 0.3s ease forwards;
     }
 
     .fade-out {
-      animation: fadeOut 0.5s forwards;
+      animation: fadeOut 0.3s ease forwards;
     }
 
     /* Ensure content is hidden during fade-out */
@@ -578,7 +722,7 @@
       z-index: 1100;
       transition: all 0.5s ease;
       filter: opacity(0);
-
+      transform: scale(1.5) rotate(5deg);
     }
 
     #map {
@@ -951,6 +1095,8 @@
       <div id="noteEditModal" class="modal" style="display: none;">
         <div class="modal-content">
           <textarea id="noteEditModalContent"></textarea>
+          <p id="modalCreatedAt"></p> <!-- For createdAt timestamp -->
+    <p id="modalEditedAt" style="display:none;"></p> <!-- For editedAt timestamp, initially hidden -->
           <button class="unique-button" id="saveNoteEditModalBtn">Save</button>
           <button class="unique-button" id="closeNoteEditModalBtn">Close</button>
         </div>
@@ -1026,8 +1172,16 @@
       <div class=storySegment>
         <p><span style="font-size:2em; font-style:italic; font-weight:bold; margin-right:2px;">The Suspects</span>
           Though not all live in the manor, each suspect has a unique connection to Grimwood and the strange powers surrounding it:</p>
+          
+        <div class="gradient-overlay left" id="gradient-overlay-left"></div>
+        <div class="gradient-overlay right" id="gradient-overlay-right"></div>
 
-        <div class="launchCharacterCards">
+                    
+                              <button id="scrollCardLaunchButton">
+                                <i class="fas fa-arrow-down"></i> <!-- Font Awesome Icon -->
+                              </button>
+
+        <div id="launchCharacterCards">
 
           <div class="launchCharacterCard">
             <p><span style="font-size:1.5em; font-style:italic; font-weight:bold; margin-right:2px;">Mara Hemlock (The Medium):</span><br>
@@ -1095,15 +1249,18 @@
 
     <!-- Character Selection -->
     <div id="characterSelection" style="display:none;">
-      <h1>Select a Character</h1>
-      <p>Choose a character to start the path:</p>
-      <div class="paths">
-        <button class="path1" onclick="startPath(1)">Lady Morgana (The Ghost)</button>
-        <button class="path2" onclick="startPath(2)">Count Viktor (The Vampire)</button>
-        <button class="path3" onclick="startPath(3)">Elvira Nightshade (The Witch)</button>
-        <button class="path4" onclick="startPath(4)">Rolf Greystone (The Werewolf)</button>
-        <button class="path5" onclick="startPath(5)">Jack O’Lantern (The Pumpkin Spirit)</button>
+      
+      <div class="characterSelectionText">
+        <h2>Select your Character</h2>
+        <p>Beware! Each path implicates a new killer.</p>
       </div>
+      
+      <div class="paths">
+        
+        </div>
+        
+      <button class="characterSelectionRestart" onclick="restartToLaunchScreen()"><p>×</p></button>
+      
     </div>
 
     <!-- Flow Navigation -->
@@ -1147,53 +1304,33 @@
     const paths = {
       1: {
         sequence: [
-          { name: "Lady Morgana", clue: "Starting with Lady Morgana reveals her deep knowledge of the unseen and the hidden truths she’s witnessed..." },
-          { name: "Count Viktor", clue: "Count Viktor’s dark secrets and mysterious actions are crucial to solving the case." },
-          { name: "Elvira Nightshade", clue: "Elvira’s magical influence and dark potions are significant in the investigation." },
-          { name: "Rolf Greystone", clue: "Rolf’s wild nature and transformations provide important clues." },
-          { name: "Jack O’Lantern", clue: "Jack O’Lantern’s fiery spirit and its connections are key to uncovering the murderer." }
+          { name: "Mara Hemlock", background:"The Medium", clue: "Mara claims the victim tried to contact her during a seance. Broken mirror, spirits invoked.", redHerring:"Mara insists she was trying to prevent the murder, but the player might initially suspect she had a hand in it.", direction:"She mentions seeing Viktor around the manor late at night.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Mara.svg?v=1726330429" },
+          { name: "Victor Sable", background:"The Occultist", clue: "Viktor’s torn ritual book, implying he was dabbling in dark magic on the night of the murder.", redHerring:"Viktor claims the ritual was for protection, not harm.", direction:"He mentions a foul smell of herbs from Elowen’s apothecary."},
+          { name: "Elowen Thorn", background:"The Herbalist", clue: "Poisonous herbs found in her shop hint she was concocting something dangerous.", redHerring:"Elowen insists the herbs were for healing, but her claim may seem suspicious.", direction:"Muddy footprints near her shop suggest Ronan was nearby.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Elowen.svg?v=1726330413" },
+          { name: "Ronan Grey", background:"The Outcast", clue: "Muddy footprints lead to Ronan’s cabin, suggesting he was at the crime scene.", redHerring:"Ronan claims he was out hunting but saw strange lights near Jack’s pumpkin patch.", direction:"The lights lead to Jack’s pumpkin patch, where something seems amiss.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Ronan.svg?v=1726330431" },
+          { name: "Jack Hawthorn", background:"The Prankster", clue: "A smashed pumpkin near the crime scene contains blood, linking Jack to the murder scene.", redHerring:"Jack claims the pumpkin was smashed as part of a prank, but this looks suspicious.", direction:"" }
         ],
-        killer: "Count Viktor"
+        killer: "Elowen Thorn"
       },
       2: {
         sequence: [
-          { name: "Count Viktor", clue: "Count Viktor’s nocturnal activities are suspicious and crucial to the investigation." },
-          { name: "Elvira Nightshade", clue: "Elvira’s dealings with Viktor and her dark magic are vital clues." },
-          { name: "Rolf Greystone", clue: "Rolf’s wild side and his connection with other characters are important." },
-          { name: "Jack O’Lantern", clue: "Jack’s fiery spirit and its effects are part of the investigation." },
-          { name: "Lady Morgana", clue: "Lady Morgana’s ghostly insights help to reveal the murderer." }
+          { name: "Viktor Sable", clue: "Ritual book with pages torn out, implying Viktor was involved in occult practices on the night of the murder.", redHerring:"Viktor claims the ritual was for protection, but this seems questionable.", direction:"He recalls a strange herbal aroma near the apothecary, linking Elowen to the crime."},
+          { name: "Elowen Thorn", clue: "Elowen’s apothecary contains poison ingredients that could have been used on the victim.", redHerring:"Elowen insists they were medicinal, not harmful.", direction:"Elowen mentions seeing Jack lurking around the pumpkin patch." },
+          { name: "Jack Hawthorn", clue: "Blood on a smashed pumpkin near the crime scene suggests Jack was nearby.", redHerring:"Jack claims he was playing pranks, but this excuse is flimsy.", direction:"Jack remembers seeing Ronan acting suspiciously in the woods." },
+          { name: "Ronan Grey", clue: "Muddy boots near the crime scene suggest Ronan was there.", redHerring:"Ronan claims the mud came from a hunt, not the crime scene.", direction:"Ronan saw candles burning in Mara’s seance room, which may be a clue." },
+          { name: "Mara Hemlock", clue: "Mara’s candles were found near the crime scene, implying she was performing a seance.", redHerring:"Mara insists she was summoning spirits, not causing harm.", direction:"" }
         ],
-        killer: "Elvira Nightshade"
+        killer: "Jack Hawthorn"
       },
       3: {
         sequence: [
-          { name: "Elvira Nightshade", clue: "Elvira’s potions and spells are central to the investigation." },
-          { name: "Rolf Greystone", clue: "Rolf’s transformations and actions are influenced by Elvira’s magic." },
-          { name: "Jack O’Lantern", clue: "Jack’s fiery nature and its implications are key clues." },
-          { name: "Lady Morgana", clue: "Lady Morgana’s ghostly powers and observations are important." },
-          { name: "Count Viktor", clue: "Count Viktor’s hidden motives and actions are significant." }
+          { name: "Elowen Thorn", clue: "Poison ingredients found in her shop imply that she had the means to kill the victim.", redHerring:"Elowen insists the ingredients were for healing.", direction:"She mentions seeing Ronan tracking through the woods on the night of the murder.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Elowen.svg?v=1726330413" },
+          { name: "Ronan Grey", clue: "Muddy footprints found near the crime scene lead to Ronan’s cabin.", redHerring:"Ronan insists he was just hunting.", direction:"He recalls hearing strange chanting from Viktor’s room." },
+          { name: "Viktor Sable", clue: "Ritual items in Viktor’s room suggest he was performing dark magic.", redHerring:"Viktor claims the ritual was to ward off evil spirits.", direction:"Viktor mentions seeing Jack near the pumpkin patch, acting strangely." },
+          { name: "Jack Hawthorn", clue: "Smashed pumpkins near the scene imply Jack was involved.", redHerring:"Jack’s excuse about Halloween pranks seems weak.", direction:"Jack recalls hearing whispering near Mara’s room." },
+          { name: "Mara Hemlock", clue: "Mara’s candles and broken mirror indicate she was summoning spirits.", redHerring:"Mara insists she was communicating with the victim’s spirit to prevent harm.", direction:"" }
         ],
-        killer: "Jack O’Lantern"
-      },
-      4: {
-        sequence: [
-          { name: "Rolf Greystone", clue: "Rolf’s primal instincts and their effects are crucial to understanding the murder." },
-          { name: "Jack O’Lantern", clue: "Jack’s fiery destruction plays a role in the investigation." },
-          { name: "Lady Morgana", clue: "Lady Morgana’s mysterious actions and observations provide vital clues." },
-          { name: "Count Viktor", clue: "Count Viktor’s secrets and actions are important for solving the case." },
-          { name: "Elvira Nightshade", clue: "Elvira’s dark magic and her connections to the murder are significant." }
-        ],
-        killer: "Rolf Greystone"
-      },
-      5: {
-        sequence: [
-          { name: "Jack O’Lantern", clue: "Jack’s hidden flames and revenge are central to the investigation." },
-          { name: "Lady Morgana", clue: "Lady Morgana’s spectral observations and secrets are crucial clues." },
-          { name: "Count Viktor", clue: "Count Viktor’s hidden motives and actions play a role in the murder." },
-          { name: "Elvira Nightshade", clue: "Elvira’s dark magic and actions are significant." },
-          { name: "Rolf Greystone", clue: "Rolf’s connection to the murder is a key part of the case." }
-        ],
-        killer: "Lady Morgana"
+        killer: "Viktor Sable"
       }
     };
     
@@ -1202,9 +1339,36 @@
     let selectedPath = null;
 
     function showCharacterSelection() {
-      document.getElementById("launchScreen").style.display = "none";
-      document.getElementById("characterSelection").style.display = "block";
-    }
+    document.getElementById("launchScreen").style.display = "none";
+    document.getElementById("characterSelection").style.display = "block";
+
+    // Generate path selection buttons dynamically using ${character.photo}
+    const pathsContainer = document.querySelector(".paths");
+    let pathButtonsHtml = '';
+
+    Object.keys(paths).forEach(pathNumber => {
+        const path = paths[pathNumber];
+        const firstCharacter = path.sequence[0]; // Get the first character in the sequence
+
+        // Use ${character.photo} dynamically for the button's background
+        pathButtonsHtml += `
+            <button onclick="startPath(${pathNumber})"
+                style="background-image: url('${firstCharacter.photo}'); 
+                background-size: cover; 
+                background-position: center;
+                cursor: pointer;">
+                <div class="pathName">
+                    <span class="character-name">${firstCharacter.name}</span>
+                    <span class="character-background">${firstCharacter.background}</span>
+                </div>
+            </button>
+        `;
+    });
+
+    // Insert the buttons into the scrollable container
+    pathsContainer.innerHTML = pathButtonsHtml;
+}
+
 
     function startPath(pathNumber) {
       selectedPath = paths[pathNumber];
@@ -1228,10 +1392,40 @@
       if (currentIndex >= 0 && currentIndex < currentPath.length) {
         const character = currentPath[currentIndex];
         document.getElementById("story").innerHTML = `
-            <h2>Current Character</h2>
+        <div class="characterProfileRow">
+        
+            <div class="characterProfileColumn halfWidth">
+            <h2>Current Character:</h2>
             <h1>${character.name}</h1>
+            </div>
+            
+            <div class="characterProfileColumn halfWidthImg">
+              <img load="lazy" src="${character.photo}">
+            </div>
+          </div>
+        
+        <div class="characterProfileRow">
+            <div class="characterProfileColumn fullWidth">
+            
             <h3>Clue</h3>
             <p>${character.clue}</p>
+          </div>
+        </div>
+          
+      <div class="characterProfileRow">
+        <div class="characterProfileColumn fullWidth">
+          <button onclick="openRedHerring()" id="redHerringButton">
+            <h3>What did ${character.name} have to say?</h3>
+          </button>
+          
+          <div id="redHerring">
+            <p>${character.redHerring}</p>
+          </div>
+          
+            <h3>An Observation, parhaps?</h3>
+            <p>${character.direction}</p>
+          </div>
+        </div>
         `;
 
         document.getElementById("backButton").style.display = currentIndex > 0 ? "inline-block" : "none";
@@ -1255,6 +1449,21 @@
         fadeInElement('story');
       });
     }
+    
+    
+    // Function to open the map
+    function openRedHerring() {
+      const redHerring = document.getElementById('redHerring');
+      redHerring.classList.add('active');
+    }
+
+    // Function to close the map
+    function closeRedHerring() {
+      const redHerring = document.getElementById('redHerring');
+      redHerring.classList.remove('active');
+      hideAllInfo();
+    }
+
 
     function showCharacterChoices() {
       fadeOutElement('controls', () => {
@@ -1262,7 +1471,7 @@
         document.getElementById("reveal").style.display = "block";
         document.getElementById("backToFlowButton").style.display = "inline-block";
         let choicesHtml = selectedPath.sequence.map(character =>
-          `<button onclick="checkGuess('${character.name}')">${character.name}</button>`
+          `<button style="background-image: url(${character.photo})" class="killerChoice" onclick="checkGuess('${character.name}')"><p>${character.name}</p></button>`
         ).join('');
         document.getElementById("characterChoices").innerHTML = choicesHtml;
         fadeInElement('reveal');
@@ -1322,6 +1531,22 @@
       // Show launch screen
       document.getElementById("launchScreen").style.display = "block";
     }
+    
+    
+// Function to return to the launch screen from character selection
+function restartToLaunchScreen() {
+  // Hide character selection screen
+  document.getElementById('characterSelection').style.display = 'none';
+
+  // Show the launch screen
+  document.getElementById('launchScreen').style.display = 'block';
+
+  // Reset any game variables if needed
+  currentPath = [];
+  currentIndex = 0;
+  selectedPath = null;
+}
+
 
     function toggleClueBanner() {
       const clueBanner = document.getElementById("clueBanner");
@@ -1409,125 +1634,145 @@
 
 
 
-    const openUniqueNotesBtn = document.getElementById('openUniqueNotesBtn');
-    const closeUniqueNotesBtn = document.getElementById('closeUniqueNotesBtn');
-    const uniqueNotesSection = document.getElementById('uniqueNotesSection');
-    const addUniqueNoteBtn = document.getElementById('addUniqueNoteBtn');
-    const saveUniqueNoteBtn = document.getElementById('saveUniqueNoteBtn');
-    const uniqueNoteInput = document.getElementById('uniqueNoteInput');
-    const uniqueNotesList = document.getElementById('uniqueNotesList');
-    const startUniqueFreshBtn = document.getElementById('startUniqueFreshBtn');
-    const uniqueConfirmModal = document.getElementById('uniqueConfirmModal');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-
     let editingNoteIndex = null; // To track the note being edited
+let currentNoteEditIndex = null; // Track which note is being opened in the popup
 
 // Function to load saved notes from localStorage and add buttons
-    const loadUniqueNotes = () => {
-      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
-      uniqueNotesList.innerHTML = ''; // Clear existing notes
-      notes.forEach((note, index) => {
-        const noteElement = document.createElement('div');
-        noteElement.innerHTML = `
-        <div class="savedNote">
-          <p>${note}</p>
-        </div>
-        
-        <div class="savedNoteBtns">
-          <button class="unique-button" onclick="openNoteInEditModal(${index})">Open in Popup</button>
-          <button class="unique-button" onclick="editUniqueNote(${index})">Edit</button>
-          <button class="unique-button" onclick="deleteUniqueNote(${index})">Delete</button>
-        </div>
-        `;
-        uniqueNotesList.appendChild(noteElement);
-      });
+const loadUniqueNotes = () => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  uniqueNotesList.innerHTML = ''; // Clear existing notes
+  
+  notes.forEach((note, index) => {
+    const noteElement = document.createElement('div');
+    noteElement.innerHTML = `
+      <div class="savedNote">
+        <p>${note.text}</p>
+        <p class="timestamp">Created: ${note.createdAt}</p>
+        ${note.editedAt ? `<p class="timestamp">Last Edited: ${note.editedAt}</p>` : ''}
+      </div>
+      
+      <div class="savedNoteBtns">
+        <button class="unique-button" onclick="openNoteInEditModal(${index})">Open in Popup</button>
+        <button class="unique-button" onclick="editUniqueNote(${index})">Edit</button>
+        <button class="unique-button" onclick="deleteUniqueNote(${index})">Delete</button>
+      </div>
+    `;
+    uniqueNotesList.appendChild(noteElement);
+  });
+};
+
+// Function to add a new note
+addUniqueNoteBtn.addEventListener('click', () => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  const newNoteText = uniqueNoteInput.value;
+  
+  if (newNoteText.trim()) {
+    const newNote = {
+      text: newNoteText,
+      createdAt: new Date().toLocaleString(), // Store creation date and time
+      editedAt: null // Initially null since it hasn't been edited
     };
-
-    // Function to add a new note
-    addUniqueNoteBtn.addEventListener('click', () => {
-      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
-      const newNote = uniqueNoteInput.value;
-      if (newNote.trim()) {
-        notes.push(newNote);
-        localStorage.setItem('uniqueNotes', JSON.stringify(notes));
-        uniqueNoteInput.value = '';
-        loadUniqueNotes();
-      }
-    });
-
-    // Function to edit a note
-    const editUniqueNote = (index) => {
-      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
-      uniqueNoteInput.value = notes[index];
-      editingNoteIndex = index; // Save the index of the note being edited
-      addUniqueNoteBtn.style.display = 'none';
-      saveUniqueNoteBtn.style.display = 'inline-block';
-    };
-
-    // Function to save changes to a note
-    saveUniqueNoteBtn.addEventListener('click', () => {
-      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
-      const updatedNote = uniqueNoteInput.value;
-      if (updatedNote.trim()) {
-        notes[editingNoteIndex] = updatedNote; // Update the note at the saved index
-        localStorage.setItem('uniqueNotes', JSON.stringify(notes));
-        uniqueNoteInput.value = '';
-        loadUniqueNotes();
-        editingNoteIndex = null;
-        addUniqueNoteBtn.style.display = 'inline-block';
-        saveUniqueNoteBtn.style.display = 'none';
-      }
-    });
-
-    // Function to delete a single note
-    const deleteUniqueNote = (index) => {
-      const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
-      notes.splice(index, 1);
-      localStorage.setItem('uniqueNotes', JSON.stringify(notes));
-      loadUniqueNotes();
-    };
-
-    // Show the confirm modal for deleting all notes
-    startUniqueFreshBtn.addEventListener('click', () => {
-      uniqueConfirmModal.style.display = 'flex';
-    });
-
-    // Confirm deletion of all notes
-    confirmDeleteBtn.addEventListener('click', () => {
-      localStorage.removeItem('uniqueNotes');
-      loadUniqueNotes();
-      uniqueConfirmModal.style.display = 'none';
-    });
-
-    // Cancel deletion and hide modal
-    cancelDeleteBtn.addEventListener('click', () => {
-      uniqueConfirmModal.style.display = 'none';
-    });
     
+    notes.push(newNote);
+    localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+    uniqueNoteInput.value = '';
+    loadUniqueNotes();
+  }
+});
+
+// Function to edit a note
+const editUniqueNote = (index) => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  uniqueNoteInput.value = notes[index].text;
+  editingNoteIndex = index; // Save the index of the note being edited
+  addUniqueNoteBtn.style.display = 'none';
+  saveUniqueNoteBtn.style.display = 'inline-block';
+};
+
+// Function to save changes to a note
+saveUniqueNoteBtn.addEventListener('click', () => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  const updatedNoteText = uniqueNoteInput.value;
+  
+  if (updatedNoteText.trim()) {
+    notes[editingNoteIndex].text = updatedNoteText; // Update the note text
+    notes[editingNoteIndex].editedAt = new Date().toLocaleString(); // Update edited timestamp
     
-    // Note Edit Modal elements
+    localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+    uniqueNoteInput.value = '';
+    loadUniqueNotes();
+    editingNoteIndex = null;
+    addUniqueNoteBtn.style.display = 'inline-block';
+    saveUniqueNoteBtn.style.display = 'none';
+  }
+});
+
+// Function to delete a single note
+const deleteUniqueNote = (index) => {
+  const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
+  notes.splice(index, 1);
+  localStorage.setItem('uniqueNotes', JSON.stringify(notes));
+  loadUniqueNotes();
+};
+
+// Show the confirm modal for deleting all notes
+startUniqueFreshBtn.addEventListener('click', () => {
+  uniqueConfirmModal.style.display = 'flex';
+});
+
+// Confirm deletion of all notes
+confirmDeleteBtn.addEventListener('click', () => {
+  localStorage.removeItem('uniqueNotes');
+  loadUniqueNotes();
+  uniqueConfirmModal.style.display = 'none';
+});
+
+// Cancel deletion and hide modal
+cancelDeleteBtn.addEventListener('click', () => {
+  uniqueConfirmModal.style.display = 'none';
+});
+
+// Note Edit Modal elements
 const noteEditModal = document.getElementById('noteEditModal');
 const noteEditModalContent = document.getElementById('noteEditModalContent');
 const saveNoteEditModalBtn = document.getElementById('saveNoteEditModalBtn');
 const closeNoteEditModalBtn = document.getElementById('closeNoteEditModalBtn');
 
-let currentNoteEditIndex = null; // Track which note is being opened in the popup
-
 // Function to open a note in the noteEditModal
 const openNoteInEditModal = (index) => {
   const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
   currentNoteEditIndex = index; // Store the index of the note
-  noteEditModalContent.value = notes[index]; // Populate the modal with the note content
+  
+  // Populate the modal with the note content and timestamps
+  noteEditModalContent.value = notes[index].text;
+  
+  // Add timestamps for createdAt and editedAt in the modal
+  const createdAtElement = document.getElementById('modalCreatedAt');
+  const editedAtElement = document.getElementById('modalEditedAt');
+  
+  createdAtElement.textContent = `Created At: ${notes[index].createdAt}`;
+  
+  // Only show the edited timestamp if it exists
+  if (notes[index].editedAt) {
+    editedAtElement.textContent = `Last Edited: ${notes[index].editedAt}`;
+    editedAtElement.style.display = 'block'; // Make sure the field is visible
+  } else {
+    editedAtElement.style.display = 'none'; // Hide if no edit has been made yet
+  }
+  
   noteEditModal.style.display = 'flex'; // Show the modal
 };
+
 
 // Function to save changes made in the noteEditModal
 saveNoteEditModalBtn.addEventListener('click', () => {
   const notes = JSON.parse(localStorage.getItem('uniqueNotes')) || [];
-  const updatedNote = noteEditModalContent.value;
-  if (updatedNote.trim()) {
-    notes[currentNoteEditIndex] = updatedNote; // Update the note in the array
+  const updatedNoteText = noteEditModalContent.value;
+  
+  if (updatedNoteText.trim()) {
+    notes[currentNoteEditIndex].text = updatedNoteText; // Update the note text
+    notes[currentNoteEditIndex].editedAt = new Date().toLocaleString(); // Update edited timestamp
+    
     localStorage.setItem('uniqueNotes', JSON.stringify(notes));
     loadUniqueNotes(); // Reload the notes list
     noteEditModal.style.display = 'none'; // Close the popup modal
@@ -1539,25 +1784,22 @@ closeNoteEditModalBtn.addEventListener('click', () => {
   noteEditModal.style.display = 'none'; // Hide the modal
 });
 
+// Function to open the notes section by adding the active class
+openUniqueNotesBtn.addEventListener('click', () => {
+  uniqueNotesSection.classList.add('active'); // Slide up by adding 'active' class
+  openUniqueNotesBtn.style.display = 'none'; // Hide the open button
+  loadUniqueNotes(); // Load notes from localStorage
+});
 
-    
+// Function to close the notes section by removing the active class
+closeUniqueNotesBtn.addEventListener('click', () => {
+  uniqueNotesSection.classList.remove('active'); // Slide down by removing 'active' class
+  openUniqueNotesBtn.style.display = 'block'; // Show the open button again
+});
 
-    // Function to open the notes section by adding the active class
-    openUniqueNotesBtn.addEventListener('click', () => {
-      uniqueNotesSection.classList.add('active'); // Slide up by adding 'active' class
-      openUniqueNotesBtn.style.display = 'none'; // Hide the open button
-      loadUniqueNotes(); // Load notes from localStorage
-    });
+// Load notes on page load
+window.onload = loadUniqueNotes;
 
-    // Function to close the notes section by removing the active class
-    closeUniqueNotesBtn.addEventListener('click', () => {
-      uniqueNotesSection.classList.remove('active'); // Slide down by removing 'active' class
-      openUniqueNotesBtn.style.display = 'block'; // Show the open button again
-    });
-
-
-    // Load notes on page load
-    window.onload = loadUniqueNotes;
     
     
     
@@ -1586,10 +1828,64 @@ closeNoteEditModalBtn.addEventListener('click', () => {
   });
 });
 
+const scrollCardLaunchButton = document.getElementById('scrollCardLaunchButton');
+const cardContainer = document.getElementById('launchCharacterCards');
+
+// Get the width of a single card (assuming all cards are the same width)
+const cardWidth = document.querySelector('.launchCharacterCard').offsetWidth;
+const gap = 20; // Adjust this to match the margin between cards
+
+// Scroll to the next card on button click
+scrollCardLaunchButton.addEventListener('click', () => {
+  cardContainer.scrollBy({
+    left: cardWidth + gap, // Scroll by one card width plus the gap between cards
+    behavior: 'smooth' // Smooth scrolling effect
+  });
+});
+
+
+
+const launchCardContainer = document.getElementById('launchCharacterCards');
+        const gradientOverlayLeft = document.getElementById('gradient-overlay-left');
+        const gradientOverlayRight = document.getElementById('gradient-overlay-right');
+        const fadeDistance = 50; // Distance from edges to hide the gradient
+        
+        function updateGradientVisibility() {
+          const maxScrollLeft = launchCardContainer.scrollWidth - launchCardContainer.clientWidth;
+          const scrollLeft = launchCardContainer.scrollLeft;
+        
+          // Update right gradient
+          if (scrollLeft >= maxScrollLeft - fadeDistance) {
+            gradientOverlayRight.style.opacity = 0; // Hide gradient
+          } else {
+            gradientOverlayRight.style.opacity = 1; // Show gradient
+          }
+        
+          // Update left gradient
+          if (scrollLeft <= fadeDistance) {
+            gradientOverlayLeft.style.opacity = 0; // Hide gradient
+          } else {
+            gradientOverlayLeft.style.opacity = 1; // Show gradient
+          }
+        }
+        
+        function updateGradientHeight() {
+            const height = launchCardContainer.offsetHeight;
+            gradientOverlayLeft.style.height = `${height}px + 10`;
+            gradientOverlayRight.style.height = `${height}px + 10`;
+        }
+
+        launchCardContainer.addEventListener('scroll', updateGradientVisibility);
+        window.addEventListener('resize', updateGradientHeight);
+
+        // Initial checks
+        updateGradientVisibility();
+        updateGradientHeight();
+
+
 
   </script>
 </body>
 
 </html>
-
 
