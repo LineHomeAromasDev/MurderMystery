@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -316,26 +316,17 @@
     }
     
     #characterSelection h1, #characterSelection p {
-      display:block;
-      line-height:1;
+      line-height:1.2;
       padding:0;
-      margin:0;
     }
     
     .characterSelectionText {
-      position:absolute;
-      top:110px;
-      left:50%;
-      transform: translateX(-50%);
       width:100%;
-      height:200vh;
+      height:auto;
+      margin:10px 0;
     }
     
     .characterSelectionRestart {
-      position:absolute;
-      top:100vh;
-      left:50%;
-      transform: translateX(-50%) translateY(-200%);
       width:fit-content;
       height:50px;
       width:50px;
@@ -343,21 +334,15 @@
       border-radius:50%;
       background: transparent;
       font-size:20pt;
-      margin:0;
+      margin:10px 0;
     }
     
     .characterSelectionRestart p {
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform: translate(-50%,-50%);
+      
     }
 
     .paths {
-      position:absolute;
-      top:calc(21vh);
-      left:0;
-      height:40vh;
+      height:auto;
       width:100%;
       display: flex;
       flex-direction:row;
@@ -367,6 +352,7 @@
       box-sizing:border-box;
       scroll-snap-type: x mandatory;
       animation: cards 1s ease 0s;
+      margin:10px 0;
     }
     
     @keyframes cards{
@@ -392,31 +378,52 @@
       
     }
     
+    .pathName {
+      width:auto;
+      height:auto;
+      position:absolute;
+      bottom:15px;
+      left:0;
+    }
+    
     .character-name {
-      width: auto;
+      width: fit-content;
       height: auto;
       text-align: left;
       background: rgba(242, 143, 28, 1);
       padding:5px 10px 10px 10px;
       border-radius:0 5px 5px 0;
+      display:block;
+      font-size:1.2em;
+      font-weight:bold;
+      font-style: italic;
+    }
+    .character-background {
+      width: fit-content;
+      height: auto;
+      text-align: left;
+      background: rgba(255,255,255, 1);
+      color:rgb(50,50,50);
+      padding: 5px 10px;
+      border-radius: 0px 0px 5px 0;
+      display: block;
+      font-size:1em;
     }
     
     .path {
+      position:relative;
       z-index:5;
       animation: card1 2s ease 0s;
       scroll-snap-align: center;
-      width: auto;
-      height: 100%;
+      min-width:250px;
+      height: auto;
       aspect-ratio: 1/1.4;
       padding: 0;
-      margin: 0;
+      margin: 0 10px;
       box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
       border: 2px solid rgba(242, 143, 28, 1);
       background: black;
       border-radius:15px;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
     }
     
     @keyframes card {
@@ -452,7 +459,7 @@
     #flow {
       margin:0;
       padding:100px 0 100px 0;
-      width:100vw;
+      width:100%;
       height:auto;
     }
     
@@ -473,7 +480,22 @@
      flex-wrap: nowrap;
      box-sizing: border-box;
      gap:15px;
+     animation: fadeInUp 0.5s ease forwards;
    }
+   
+       @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: scale(0.2) translateY(30px);
+        filter: blur(0px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+      }
+    }
    
    .characterProfileColumn {
      display:flex;
@@ -483,6 +505,7 @@
      background: rgba(20, 8, 67, 1);
      border-radius: 15px;
      padding:15px;
+     overflow:hidden;
    }
    
    .halfWidth {
@@ -500,24 +523,53 @@
    }
    
    .fullWidth {
+     position:relative;
      width: calc(100%);
+     padding-bottom:100px;
    }
    
    #redHerring {
-     position: absolute;
-     bottom: 0;
-     left: 15px;
-     transition: all 0.5s ease;
+     background: white;
+     color:red;
+     margin:0;
+     height:100px;
    }
    
-   #redHerring.active {
-     position: absolute;
-     bottom: 0;
-     left: 15px;
+   #redHerring p {
+     display:inline-block;
+     padding: 0;
+     margin: 0;
    }
    
    #redHerringButton {
-     
+     background: white;
+     color:red;
+     margin:0
+     padding:0 10px;
+     height:40px;
+     width:fit-content;
+     border-top-right-radius: 10px 15px;
+     border-top-left-radius: 15px 10px;
+   }
+   #redHerringButton h3{
+     padding:0;
+     margin:0;
+   }
+   
+   #redHerringSection{
+     transform: rotate(2deg);
+     height:150px;
+     width: 90%;
+     position: absolute;
+     bottom: -90px;
+     left: 10px;
+     transition:all 0.5s ease;
+     margin:0;
+   }
+   
+   #redHerringSection.active {
+     bottom:0;
+     left:10px;
    }
 
     .controls {
@@ -1015,7 +1067,7 @@
     }
 
     .modal-content {
-      background-color: #fff;
+      background-color: rgb(20,20,20);
       padding: 10px;
       border-radius: 20px;
       text-align: center;
@@ -1044,11 +1096,7 @@
     
 @media screen and (min-width:768px) {
       .paths button {
-      scroll-snap-align: center;
-      min-width: 30vw;
-      height: 450px;
-      padding: 0;
-      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
+      
     }
   </style>
 </head>
@@ -1301,14 +1349,39 @@
 
   </div>
   <script>
-    const paths = {
+  
+    
+    const characters = {
+  "Mara Hemlock": { 
+    photo: "https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Artboard_2.svg?v=1726508183", 
+    background: "[The Medium]"
+  },
+  "Viktor Sable": {
+    photo: "https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Artboard_2_1.svg?v=1726508141", 
+    background: "[The Occultist]"
+  },
+  "Elowen Thorn": {
+    photo: "https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Artboard_2_copy_4.svg?v=1726508439", 
+    background: "[The Herbalist]"
+  },
+  "Ronan Grey": {
+    photo: "https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Ronan.svg?v=1726330431", 
+    background: "[The Outcast]"
+  },
+  "Jack Hawthorn": {
+    photo: "https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Artboard_2_copy_6.svg?v=1726508199", 
+    background: "[The Prankster]"
+  }
+};
+
+const paths = {
       1: {
         sequence: [
-          { name: "Mara Hemlock", background:"The Medium", clue: "Mara claims the victim tried to contact her during a seance. Broken mirror, spirits invoked.", redHerring:"Mara insists she was trying to prevent the murder, but the player might initially suspect she had a hand in it.", direction:"She mentions seeing Viktor around the manor late at night.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Mara.svg?v=1726330429" },
-          { name: "Victor Sable", background:"The Occultist", clue: "Viktor’s torn ritual book, implying he was dabbling in dark magic on the night of the murder.", redHerring:"Viktor claims the ritual was for protection, not harm.", direction:"He mentions a foul smell of herbs from Elowen’s apothecary."},
-          { name: "Elowen Thorn", background:"The Herbalist", clue: "Poisonous herbs found in her shop hint she was concocting something dangerous.", redHerring:"Elowen insists the herbs were for healing, but her claim may seem suspicious.", direction:"Muddy footprints near her shop suggest Ronan was nearby.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Elowen.svg?v=1726330413" },
-          { name: "Ronan Grey", background:"The Outcast", clue: "Muddy footprints lead to Ronan’s cabin, suggesting he was at the crime scene.", redHerring:"Ronan claims he was out hunting but saw strange lights near Jack’s pumpkin patch.", direction:"The lights lead to Jack’s pumpkin patch, where something seems amiss.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Ronan.svg?v=1726330431" },
-          { name: "Jack Hawthorn", background:"The Prankster", clue: "A smashed pumpkin near the crime scene contains blood, linking Jack to the murder scene.", redHerring:"Jack claims the pumpkin was smashed as part of a prank, but this looks suspicious.", direction:"" }
+          { name: "Mara Hemlock", clue: "Mara claims the victim tried to contact her during a seance. Broken mirror, spirits invoked.", redHerring:"Mara insists she was trying to prevent the murder, but the player might initially suspect she had a hand in it.", direction:"She mentions seeing Viktor around the manor late at night." },
+          { name: "Viktor Sable", clue: "Viktor’s torn ritual book, implying he was dabbling in dark magic on the night of the murder.", redHerring:"Viktor claims the ritual was for protection, not harm.", direction:"He mentions a foul smell of herbs from Elowen’s apothecary."},
+          { name: "Elowen Thorn", clue: "Poisonous herbs found in her shop hint she was concocting something dangerous.", redHerring:"Elowen insists the herbs were for healing, but her claim may seem suspicious.", direction:"Muddy footprints near her shop suggest Ronan was nearby." },
+          { name: "Ronan Grey", clue: "Muddy footprints lead to Ronan’s cabin, suggesting he was at the crime scene.", redHerring:"Ronan claims he was out hunting but saw strange lights near Jack’s pumpkin patch.", direction:"The lights lead to Jack’s pumpkin patch, where something seems amiss." },
+          { name: "Jack Hawthorn", clue: "A smashed pumpkin near the crime scene contains blood, linking Jack to the murder scene.", redHerring:"Jack claims the pumpkin was smashed as part of a prank, but this looks suspicious.", direction:"" }
         ],
         killer: "Elowen Thorn"
       },
@@ -1324,7 +1397,7 @@
       },
       3: {
         sequence: [
-          { name: "Elowen Thorn", clue: "Poison ingredients found in her shop imply that she had the means to kill the victim.", redHerring:"Elowen insists the ingredients were for healing.", direction:"She mentions seeing Ronan tracking through the woods on the night of the murder.", photo:"https://cdn.shopify.com/s/files/1/0550/8782/5151/files/Elowen.svg?v=1726330413" },
+          { name: "Elowen Thorn", clue: "Poison ingredients found in her shop imply that she had the means to kill the victim.", redHerring:"Elowen insists the ingredients were for healing.", direction:"She mentions seeing Ronan tracking through the woods on the night of the murder." },
           { name: "Ronan Grey", clue: "Muddy footprints found near the crime scene lead to Ronan’s cabin.", redHerring:"Ronan insists he was just hunting.", direction:"He recalls hearing strange chanting from Viktor’s room." },
           { name: "Viktor Sable", clue: "Ritual items in Viktor’s room suggest he was performing dark magic.", redHerring:"Viktor claims the ritual was to ward off evil spirits.", direction:"Viktor mentions seeing Jack near the pumpkin patch, acting strangely." },
           { name: "Jack Hawthorn", clue: "Smashed pumpkins near the scene imply Jack was involved.", redHerring:"Jack’s excuse about Halloween pranks seems weak.", direction:"Jack recalls hearing whispering near Mara’s room." },
@@ -1333,114 +1406,163 @@
         killer: "Viktor Sable"
       }
     };
-    
-    let currentPath = [];
-    let currentIndex = 0;
-    let selectedPath = null;
 
-    function showCharacterSelection() {
-    document.getElementById("launchScreen").style.display = "none";
-    document.getElementById("characterSelection").style.display = "block";
+let currentPath = [];
+let currentIndex = 0;
+let selectedPath = null;
 
-    // Generate path selection buttons dynamically using ${character.photo}
-    const pathsContainer = document.querySelector(".paths");
-    let pathButtonsHtml = '';
+// Function to collect all unique image URLs from paths
+function collectImageUrls() {
+  const urls = new Set();
 
-    Object.keys(paths).forEach(pathNumber => {
-        const path = paths[pathNumber];
-        const firstCharacter = path.sequence[0]; // Get the first character in the sequence
-
-        // Use ${character.photo} dynamically for the button's background
-        pathButtonsHtml += `
-            <button onclick="startPath(${pathNumber})"
-                style="background-image: url('${firstCharacter.photo}'); 
-                background-size: cover; 
-                background-position: center;
-                cursor: pointer;">
-                <div class="pathName">
-                    <span class="character-name">${firstCharacter.name}</span>
-                    <span class="character-background">${firstCharacter.background}</span>
-                </div>
-            </button>
-        `;
+  Object.values(paths).forEach(path => {
+    path.sequence.forEach(character => {
+      if (character.photo) {
+        urls.add(character.photo);
+      }
     });
+  });
 
-    // Insert the buttons into the scrollable container
-    pathsContainer.innerHTML = pathButtonsHtml;
+  return Array.from(urls);
 }
 
+// Function to preload images
+function preloadImages(imageUrls) {
+  imageUrls.forEach(url => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => console.log(`Preloaded: ${url}`); // Log loaded images
+  });
+}
 
-    function startPath(pathNumber) {
-      selectedPath = paths[pathNumber];
-      currentPath = selectedPath.sequence;
-      currentIndex = 0;
+// Collect and preload images
+const imageUrls = collectImageUrls();
+preloadImages(imageUrls);
 
-      // Fade out the character selection and then show the flow
-      fadeOutElement('characterSelection', () => {
-        document.getElementById("characterSelection").style.display = "none";
-        document.getElementById("flow").style.display = "block";
-        document.getElementById("clueBanner").style.display = "block";
-        document.getElementById("controls").style.display = "block";
-        document.getElementById("reveal").style.display = "none";
-        document.getElementById("feedback").style.display = "none";
-        document.getElementById("backToFlowButton").style.display = "none";
-        updateCharacterDisplay();
-      });
-    }
+function showCharacterSelection() {
+  document.getElementById("launchScreen").style.display = "none";
+  document.getElementById("characterSelection").style.display = "block";
 
-    function updateCharacterDisplay() {
-      if (currentIndex >= 0 && currentIndex < currentPath.length) {
-        const character = currentPath[currentIndex];
-        document.getElementById("story").innerHTML = `
+  // Generate path selection buttons dynamically using characters
+  const pathsContainer = document.querySelector(".paths");
+  let pathButtonsHtml = '';
+
+  Object.keys(paths).forEach(pathNumber => {
+    const path = paths[pathNumber];
+    const firstCharacter = path.sequence[0]; // Get the first character in the sequence
+    const characterDetails = characters[firstCharacter.name]; // Fetch character data from centralized characters object
+    
+// Check if characterDetails exist before accessing properties
+  if (characterDetails) {
+    pathButtonsHtml += `
+          <button class="path" onclick="startPath(${pathNumber})"
+              style="background-image: url('${characterDetails.photo}'); 
+              background-size: cover; 
+              background-position: center;
+              cursor: pointer;">
+              <div class="pathName">
+                  <span class="character-name">${firstCharacter.name}</span>
+                  <span class="character-background">${characterDetails.background}</span>
+              </div>
+          </button>
+        `;
+  } else {
+    console.error(`Character details not found for ${firstCharacter.name}`);
+  }
+  });
+
+// Insert the buttons into the scrollable container
+pathsContainer.innerHTML = pathButtonsHtml;
+}
+
+function startPath(pathNumber) {
+  selectedPath = paths[pathNumber];
+  currentPath = selectedPath.sequence;
+  currentIndex = 0;
+
+  // Fade out the character selection and then show the flow
+  fadeOutElement('characterSelection', () => {
+    document.getElementById("characterSelection").style.display = "none";
+    document.getElementById("flow").style.display = "block";
+    document.getElementById("clueBanner").style.display = "block";
+    document.getElementById("controls").style.display = "block";
+    document.getElementById("reveal").style.display = "none";
+    document.getElementById("feedback").style.display = "none";
+    document.getElementById("backToFlowButton").style.display = "none";
+    updateCharacterDisplay();
+  });
+}
+
+function updateCharacterDisplay() {
+  if (currentIndex >= 0 && currentIndex < currentPath.length) {
+    const character = currentPath[currentIndex];
+    const characterDetails = characters[character.name]; // Fetch character details from centralized characters object
+
+    if (characterDetails) {
+      document.getElementById("story").innerHTML = `
         <div class="characterProfileRow">
-        
             <div class="characterProfileColumn halfWidth">
-            <h2>Current Character:</h2>
-            <h1>${character.name}</h1>
+                <h2>Current Character:</h2>
+                <h1>${character.name}</h1>
             </div>
             
             <div class="characterProfileColumn halfWidthImg">
-              <img load="lazy" src="${character.photo}">
+                <img load="lazy" src="${characterDetails.photo}">
             </div>
-          </div>
+        </div>
         
         <div class="characterProfileRow">
             <div class="characterProfileColumn fullWidth">
-            
-            <h3>Clue</h3>
-            <p>${character.clue}</p>
-          </div>
+                <h3>Clue</h3>
+                <p>${character.clue}</p>
+            </div>
         </div>
           
-      <div class="characterProfileRow">
-        <div class="characterProfileColumn fullWidth">
-          <button onclick="openRedHerring()" id="redHerringButton">
-            <h3>What did ${character.name} have to say?</h3>
-          </button>
+        <div class="characterProfileRow">
+          <div class="characterProfileColumn fullWidth">
           
-          <div id="redHerring">
-            <p>${character.redHerring}</p>
+          <div id="redHerringSection">
+          
+            <button onclick="openRedHerring()" id="redHerringButton">
+              <h3>What did ${character.name} have to say?</h3>
+            </button>
+            
+            <div id="redHerring">
+              <p>${character.redHerring}</p>
+            </div>
+            
           </div>
-          
-            <h3>An Observation, parhaps?</h3>
+            
+            <h3>An Observation, perhaps?</h3>
             <p>${character.direction}</p>
           </div>
         </div>
-        `;
+      `;
+    } else {
+      console.error(`Character details not found for ${character.name}`);
+    }
 
-        document.getElementById("backButton").style.display = currentIndex > 0 ? "inline-block" : "none";
-        document.getElementById("nextButton").style.display = currentIndex < currentPath.length - 1 ? "inline-block" : "none";
-        document.getElementById("guessButton").style.display = currentIndex === currentPath.length - 1 ? "inline-block" : "none";
+    document.getElementById("backButton").style.display = currentIndex > 0 ? "inline-block" : "none";
+    document.getElementById("nextButton").style.display = currentIndex < currentPath.length - 1 ? "inline-block" : "none";
+    document.getElementById("guessButton").style.display = currentIndex === currentPath.length - 1 ? "inline-block" : "none";
 
-        // Update clue banner
-        document.getElementById("clueList").innerHTML = currentPath.slice(0, currentIndex + 1).map(character => `
-            <div class="clueItem">
+
+// Update clue banner
+document.getElementById("clueList").innerHTML = currentPath.slice(0, currentIndex + 1).map(character => {
+  const characterDetails = characters[character.name]; // Fetch details for each clue character
+  if (characterDetails) {
+    return `
+          <div class="clueItem">
             <h1>${character.name}</h1>
             <p>${character.clue}</p>
-            </div>
-        `).join('');
-      }
-    }
+          </div>
+        `;
+  }
+  return ''; // Return empty if no character details found
+}).join('');
+}
+}
+
 
     function navigate(direction) {
       fadeOutElement('story', () => {
@@ -1453,30 +1575,52 @@
     
     // Function to open the map
     function openRedHerring() {
-      const redHerring = document.getElementById('redHerring');
+      const redHerring = document.getElementById('redHerringSection');
       redHerring.classList.add('active');
     }
 
     // Function to close the map
     function closeRedHerring() {
-      const redHerring = document.getElementById('redHerring');
+      const redHerring = document.getElementById('redHerringSection');
       redHerring.classList.remove('active');
       hideAllInfo();
     }
 
 
-    function showCharacterChoices() {
-      fadeOutElement('controls', () => {
-        document.getElementById("controls").style.display = "none";
-        document.getElementById("reveal").style.display = "block";
-        document.getElementById("backToFlowButton").style.display = "inline-block";
-        let choicesHtml = selectedPath.sequence.map(character =>
-          `<button style="background-image: url(${character.photo})" class="killerChoice" onclick="checkGuess('${character.name}')"><p>${character.name}</p></button>`
-        ).join('');
-        document.getElementById("characterChoices").innerHTML = choicesHtml;
-        fadeInElement('reveal');
-      });
-    }
+function showCharacterChoices() {
+  fadeOutElement('controls', () => {
+    document.getElementById("controls").style.display = "none";
+    document.getElementById("reveal").style.display = "block";
+    document.getElementById("backToFlowButton").style.display = "inline-block";
+
+    // Generate the HTML for the buttons using the `characters` data
+    let choicesHtml = selectedPath.sequence.map(characterInPath => {
+      const characterName = characterInPath.name;
+      const characterDetails = characters[characterName]; // Pull the details from the `characters` object
+      const characterPhoto = characterDetails?.photo || 'path-to-default-placeholder-image.jpg'; // Safeguard if photo is missing
+
+      return `
+        <button style="background-image: url('${characterPhoto}');
+                        background-size: cover; 
+                        background-position: center;" 
+                class="killerChoice" 
+                onclick="checkGuess('${characterName}')">
+          <p>${characterName}</p>
+        </button>`;
+    }).join('');
+
+    // Insert buttons into the DOM
+    document.getElementById("characterChoices").innerHTML = choicesHtml;
+
+    // Preload the images in the background without affecting the flow
+    const imageUrls = selectedPath.sequence.map(characterInPath => characters[characterInPath.name]?.photo);
+    preloadImages(imageUrls);
+
+    // Fade in the reveal section
+    fadeInElement('reveal');
+  });
+}
+
 
     function checkGuess(guess) {
       const correctKiller = selectedPath.killer;
@@ -1603,7 +1747,7 @@ function restartToLaunchScreen() {
 
       // Get the position of the hotspot relative to the map
       const hotspotRect = hotspot.getBoundingClientRect();
-      const mapRect = document.getElementById('map').getBoundingClientRect();
+      const mapRect = document.getElementById('mapImage').getBoundingClientRect();
 
       // Set the info box position relative to the hotspot
       let infoX = hotspotRect.left - mapRect.left + 30; // 30px to the right of the hotspot
@@ -1881,6 +2025,25 @@ const launchCardContainer = document.getElementById('launchCharacterCards');
         // Initial checks
         updateGradientVisibility();
         updateGradientHeight();
+
+
+
+
+
+
+// Function to restart the game and clear saved progress
+function resetGameState() {
+  localStorage.removeItem('gameState');  // Clear saved progress
+
+  // Reset variables to their initial state
+  selectedPathId = null;
+  currentStep = 0;
+  currentView = "start";
+  otherGameData = {};
+
+  // Start a new game from the beginning
+  startNewGame();
+}
 
 
 
